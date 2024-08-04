@@ -1,0 +1,28 @@
+query GetHomePagePosts {
+  posts {
+    nodes {
+      date
+      uri
+      title
+      commentCount
+      excerpt
+      categories {
+        nodes {
+          name
+          uri
+        }
+      }
+      featuredImage {
+        node {
+          srcSet
+          sourceUrl
+          altText
+          mediaDetails {
+            height
+            width
+          }
+        }
+      }
+    }
+  }
+}

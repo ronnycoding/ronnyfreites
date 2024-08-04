@@ -1,0 +1,20 @@
+query GetMenus {
+  menus(where: { location: PRIMARY }) {
+    nodes {
+      name
+      menuItems {
+        nodes {
+          uri
+          url
+          order
+          label
+        }
+      }
+    }
+  }
+  generalSettings {
+    title
+    url
+    description
+  }
+}

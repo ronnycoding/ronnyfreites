@@ -1,0 +1,28 @@
+overwrite: true
+schema:
+  - http://localhost:8080/graphql
+documents:
+  - ./src/operations/*.graphql
+  - ./src/**/*!(generated.).tsx
+config:
+  scalars:
+    DateTime: Date
+    Date: Date
+    JSONString: any
+  nonOptionalTypename: true
+generates:
+  src/generated/introspection.json:
+    config:
+      minify: true
+    plugins:
+      - introspection
+  src/generated/gql-global.ts:
+    plugins:
+      - typescript
+  src/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .ts # Specify the file extension
+      baseTypesPath: ./generated/gql-global.ts # Correct the path to the base types
+    plugins:
+      - typescript-operations

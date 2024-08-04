@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/css/main.751d9a0b.css",
+    "main.js": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/js/main.8e2cf2fc.js",
+    "static/media/wpengine-logo.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/wpengine-logo.40f3a1215fbea4708a6a4bff9624fece.svg",
+    "static/media/content-copy.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/content-copy.e50f17791e757794684afc63d5d4cb00.svg",
+    "static/media/delete-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/delete-icon.8fe170c40cab65513a25239b397ceb99.svg",
+    "static/media/document-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/document-icon.f21aeb136f150c016d83566c80e3ec89.svg",
+    "static/media/sparkle-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/sparkle-icon.ce235e5f550444d130ccb76981b17e63.svg",
+    "static/media/error-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/error-icon.1e6ba84e4942155da06137ef431e3294.svg",
+    "static/media/warning-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/warning-icon.7f8f2cac4ea09e78f5af6cbb0b8fb2b0.svg",
+    "static/media/info-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/info-icon.30042d2143dbaf9927d68a3c375ea5e2.svg",
+    "static/media/success-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/success-icon.1fbd8c959e7200e8770179c3482d0471.svg",
+    "static/media/search-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/search-icon.553693483eece21ac1f02866dbcf436b.svg",
+    "static/media/reload-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/reload-icon.ce27213a21c8637e2aff195d52baa50f.svg",
+    "static/media/expand-more.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/expand-more.a67cb7a584a759832f8e699e45b044f5.svg",
+    "static/media/dot-icon.svg": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/media/dot-icon.64b93c5b2b4a375d14d28993307ad8c1.svg",
+    "index.html": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/index.html",
+    "main.751d9a0b.css.map": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/css/main.751d9a0b.css.map",
+    "main.8e2cf2fc.js.map": "/wp-content/plugins/atlas-search/includes/smart-search-settings/build/static/js/main.8e2cf2fc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.751d9a0b.css",
+    "static/js/main.8e2cf2fc.js"
+  ]
+}

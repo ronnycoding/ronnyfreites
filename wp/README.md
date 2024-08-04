@@ -1,0 +1,1 @@
+- Introspection Disabled by Default​ WPGraphQL disables public Schema Introspection by default, but for users that want to enable it, it can be enabled with one-click from the GraphQL > Settings page in the WordPress dashboard.

@@ -1,15 +1,30 @@
 ---
 export const prerender = true;
-import Archive from "../components/templates/Archive.astro";
-import Single from "../components/templates/Single.astro";
 import MainLayout from "../layouts/MainLayout.astro";
-import { getAllUris, getNodeByURI } from "../lib/api";
-const uri = `/${Astro.params.uri}/`;
-const data = await getNodeByURI(uri);
+import { getAllUris, getNodeBySlug } from "../lib/api";
+import Archive from "../templates/Archive.astro";
+import Single from "../templates/Single.astro";
+let uri = `/${Astro.params.uri}`;
+if (Astro.url.searchParams.get("p")) {
+  uri += `?p=${Astro.url.searchParams.get("p")}`;
+}
+console.log("uri", uri);
+const data = await getNodeBySlug(uri);
 const node = data.nodeByUri;
 
 export async function getStaticPaths() {
-  return await getAllUris();
+  const allUris = await getAllUris();
+  const slugs = Object.values(allUris)
+    .reduce(function (acc, currentValue) {
+      // @ts-ignore
+      return acc.concat(currentValue.nodes);
+    }, [])
+    .map((node) => ({
+      params: {
+        slug: node.slug,
+      },
+    }));
+  return slugs;
 }
 
 function resolveContentTemplate(node) {
@@ -37,6 +52,6 @@ function resolveContentTemplate(node) {
 const Template = resolveContentTemplate(node);
 ---
 
-<MainLayout title={node.title || node.name} description={node.excerpt}>
+<MainLayout title={node?.title || node?.name || ""} description={node?.excerpt}>
   <Template node={node} />
 </MainLayout>

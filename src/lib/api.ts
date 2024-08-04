@@ -1,3 +1,4 @@
+import { GetAllSlugsQuery } from "../operations/query-all-uris";
 import { GetHomePagePostsQuery } from "../operations/query-home-page-posts";
 import { GetMenusQuery } from "../operations/query-menus";
 import { GetNodeByUriQuery } from "../operations/query-node-by-uri";
@@ -81,10 +82,9 @@ export async function homePagePostsQuery() {
   return res;
 }
 
-export async function getNodeByURI(uri) {
+export async function getNodeBySlug(uri: string) {
   const res = await fetchQuery<GetNodeByUriQuery>(
-    `{
-      query GetNodeByURI($uri: String!) {
+    `query GetNodeByURI($uri: String!) {
         nodeByUri(uri: $uri) {
           __typename
           isContentNode
@@ -156,6 +156,33 @@ export async function getNodeByURI(uri) {
     {
       uri: uri,
     }
+  );
+
+  console.log(res);
+
+  return res;
+}
+
+export async function getAllUris() {
+  const res = await fetchQuery<GetAllSlugsQuery>(
+    `{
+      terms {
+        nodes {
+          slug
+        }
+      }
+      posts(first: 100) {
+        nodes {
+          slug
+        }
+      }
+      pages(first: 100) {
+        nodes {
+          slug
+        }
+      }
+    }
+  `
   );
 
   return res;

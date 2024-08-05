@@ -2,13 +2,13 @@
 import { navQuery } from "../lib/api";
 import HeaderLink from "./HeaderLink.astro";
 const navData = await navQuery();
-const navItems = navData.menus.nodes?.[0]?.menuItems?.nodes ?? [];
-const generalSettings = navData.generalSettings;
+const navItems = navData?.menus?.nodes?.[0]?.menuItems?.nodes ?? [];
+const generalSettings = navData?.generalSettings;
 ---
 
 <header>
   <nav>
-    <h2><a href="/">{generalSettings.title}</a></h2>
+    <h2><a href="/">{generalSettings?.title}</a></h2>
     <div class="internal-links">
       <HeaderLink href="/">Home</HeaderLink>
       {

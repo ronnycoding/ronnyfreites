@@ -1,0 +1,24 @@
+query GetPageBySlug($slug: ID!) {
+  page(id: $slug, idType: URI) {
+    id
+    title
+    date
+    uri
+    slug
+    content
+    featuredImage {
+      node {
+        srcSet
+        sourceUrl
+        altText
+        mediaDetails {
+          height
+          width
+        }
+      }
+    }
+    seo {
+      fullHead
+    }
+  }
+}

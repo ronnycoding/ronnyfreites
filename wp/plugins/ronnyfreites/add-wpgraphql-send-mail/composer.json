@@ -1,0 +1,13 @@
+{
+    "name": "ashhitch/wp-graphql-send-mail",
+    "description": "Send Emails via with WPGraphQL",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "authors": [{
+        "name": "Ash Hitchcock",
+        "email": "hello@ashleyhitchcock.co.uk"
+    }],
+    "require": {
+        "wp-graphql/wp-graphql": ">=0.3.8"
+    }
+}

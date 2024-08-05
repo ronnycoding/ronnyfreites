@@ -1,0 +1,22 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+
+const { seoTags } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <slot name="head" />
+    <BaseHead seoTags={seoTags} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot name="body" />
+    </main>
+    <Footer />
+  </body>
+</html>

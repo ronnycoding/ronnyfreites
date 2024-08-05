@@ -2,6 +2,9 @@ import { GetAllSlugsQuery } from "../operations/query-all-uris";
 import { GetHomePagePostsQuery } from "../operations/query-home-page-posts";
 import { GetMenusQuery } from "../operations/query-menus";
 import { GetNodeByUriQuery } from "../operations/query-node-by-uri";
+import { GetPageBySlugQuery } from "../operations/query-page-by-slug";
+import { GetPagesQuery } from "../operations/query-pages";
+import { GetPostBySlugQuery } from "../operations/query-post-by-slug";
 
 const fetchQuery = async <T>(query, variables = {}): Promise<T> => {
   try {
@@ -54,6 +57,7 @@ export async function homePagePostsQuery() {
         nodes {
           date
           uri
+          slug
           title
           commentCount
           excerpt
@@ -61,6 +65,7 @@ export async function homePagePostsQuery() {
             nodes {
               name
               uri
+              slug
             }
           }
           featuredImage {
@@ -179,6 +184,117 @@ export async function getAllUris() {
       pages(first: 100) {
         nodes {
           slug
+        }
+      }
+    }
+  `
+  );
+
+  return res;
+}
+
+export async function getPageBySlug(slug: string) {
+  const res = await fetchQuery<GetPageBySlugQuery>(
+    `query GetPageBySlug($slug: ID!) {
+      page(id: $slug, idType: URI) {
+        id
+        title
+        date
+        uri
+        slug
+        content
+        slug
+        featuredImage {
+          node {
+            srcSet
+            sourceUrl
+            altText
+            mediaDetails {
+              height
+              width
+            }
+          }
+        }
+        seo {
+          fullHead
+        }
+      }
+    }
+  `,
+    {
+      slug: slug,
+    }
+  );
+
+  return res;
+}
+
+export async function getPostBySlug(slug: string) {
+  const res = await fetchQuery<GetPostBySlugQuery>(
+    `query GetPostBySlug($slug: ID!) {
+      post(id: $slug, idType: SLUG) {
+        id
+        title
+        date
+        uri
+        slug
+        excerpt
+        content
+        slug
+        categories {
+          nodes {
+            name
+            uri
+          }
+        }
+        featuredImage {
+          node {
+            srcSet
+            sourceUrl
+            altText
+            mediaDetails {
+              height
+              width
+            }
+          }
+        }
+        seo {
+          fullHead
+        }
+      }
+    }
+  `,
+    {
+      slug: slug,
+    }
+  );
+
+  return res;
+}
+
+export async function getPages() {
+  const res = await fetchQuery<GetPagesQuery>(
+    `query GetPages {
+      pages(first: 100) {
+        nodes {
+          id
+          title
+          slug
+          content
+          featuredImage {
+            node {
+              srcSet
+              sourceUrl
+              altText
+              mediaDetails {
+                height
+                width
+              }
+            }
+          }
+          seo {
+            fullHead
+          }
         }
       }
     }

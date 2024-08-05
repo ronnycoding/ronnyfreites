@@ -3,6 +3,7 @@ query GetHomePagePosts {
     nodes {
       date
       uri
+      slug
       title
       commentCount
       excerpt
@@ -10,6 +11,7 @@ query GetHomePagePosts {
         nodes {
           name
           uri
+          slug
         }
       }
       featuredImage {

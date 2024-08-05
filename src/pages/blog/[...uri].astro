@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getPostBySlug } from "../../lib/api";
+const postData = await getPostBySlug(Astro.params.uri);
+
+Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
+---
+
+<Layout seoTags={postData?.post?.seo?.fullHead}>
+  <style slot="header">
+    main {
+      width: 960px;
+    }
+    h1 {
+      margin: 10px 0 0;
+      font-size: 2.369rem;
+    }
+    img {
+      width: 100%;
+      border-radius: 12px;
+    }
+  </style>
+  <Fragment slot="body">
+    {
+      postData?.post.featuredImage && (
+        <img
+          width={720}
+          height={360}
+          src={postData?.post.featuredImage.node.sourceUrl}
+          alt={postData?.post.featuredImage.node.altText}
+          srcset={postData?.post.featuredImage.node.srcSet}
+          loading="lazy"
+        />
+      )
+    }
+    <h1>{postData?.post?.title}</h1>
+    <Fragment set:html={postData?.post?.content} />
+  </Fragment>
+</Layout>

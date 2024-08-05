@@ -1,13 +1,13 @@
 ---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
-	metaTags: string
+  seoTags: string;
 }
 
-const { metaTags } = Astro.props;
+const { seoTags } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -17,8 +17,20 @@ const { metaTags } = Astro.props;
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<link
+  rel="preload"
+  href="/fonts/atkinson-regular.woff"
+  as="font"
+  type="font/woff"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/atkinson-bold.woff"
+  as="font"
+  type="font/woff"
+  crossorigin
+/>
 
 <!-- Yoast SEO meta tags -->
-<Fragment set:html={metaTags}/>
+<Fragment set:html={seoTags} />

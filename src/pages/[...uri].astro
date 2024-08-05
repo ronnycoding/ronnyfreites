@@ -1,57 +1,26 @@
 ---
-export const prerender = true;
-import MainLayout from "../layouts/MainLayout.astro";
-import { getAllUris, getNodeBySlug } from "../lib/api";
-import Archive from "../templates/Archive.astro";
-import Single from "../templates/Single.astro";
-let uri = `/${Astro.params.uri}`;
-if (Astro.url.searchParams.get("p")) {
-  uri += `?p=${Astro.url.searchParams.get("p")}`;
-}
-console.log("uri", uri);
-const data = await getNodeBySlug(uri);
-const node = data.nodeByUri;
+import Layout from "../layouts/Layout.astro";
+import { getPageBySlug } from "../lib/api";
+const pageData = await getPageBySlug(Astro.url.pathname.replace("/", ""));
 
-export async function getStaticPaths() {
-  const allUris = await getAllUris();
-  const slugs = Object.values(allUris)
-    .reduce(function (acc, currentValue) {
-      // @ts-ignore
-      return acc.concat(currentValue.nodes);
-    }, [])
-    .map((node) => ({
-      params: {
-        slug: node.slug,
-      },
-    }));
-  return slugs;
-}
-
-function resolveContentTemplate(node) {
-  let template;
-  switch (node.__typename) {
-    case "Post":
-      template = Single;
-      break;
-    case "Page":
-      template = Single;
-      break;
-    case "Category":
-      template = Archive;
-      break;
-    case "Tag":
-      template = Archive;
-      break;
-    default:
-      template = Single;
-  }
-
-  return template;
-}
-
-const Template = resolveContentTemplate(node);
+Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 
-<MainLayout title={node?.title || node?.name || ""} description={node?.excerpt}>
-  <Template node={node} />
-</MainLayout>
+<Layout seoTags={pageData?.page?.seo?.fullHead}>
+  <Fragment slot="body">
+    {
+      pageData?.page?.featuredImage && (
+        <img
+          width={720}
+          height={360}
+          src={pageData?.page?.featuredImage.node.sourceUrl}
+          alt={pageData?.page?.featuredImage.node.altText}
+          srcset={pageData?.page?.featuredImage.node.srcSet}
+          loading="lazy"
+        />
+      )
+    }
+    <h1>{pageData?.page?.title}</h1>
+    <Fragment set:html={pageData?.page?.content} />
+  </Fragment>
+</Layout>

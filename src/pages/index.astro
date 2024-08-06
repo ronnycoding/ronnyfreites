@@ -2,14 +2,23 @@
 import FormattedDate from "../components/FormattedDate.astro";
 import Layout from "../layouts/Layout.astro";
 import { getPageBySlug, homePagePostsQuery } from "../lib/api";
+import { stripDomain } from "../utils";
 
 const pageData = await getPageBySlug("home");
 const postData = await homePagePostsQuery();
 const posts = postData.posts.nodes;
+
+const replaceApiDomainWithLocal = (html) => {
+  return html.replaceAll(
+    import.meta.env.WORDPRESS_API_URL.replace("/graphql", ""),
+    `${Astro.url.protocol}//${Astro.url.host}`
+  );
+};
+
 Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 
-<Layout seoTags={pageData?.page?.seo?.fullHead}>
+<Layout seoTags={replaceApiDomainWithLocal(pageData?.page?.seo?.fullHead)}>
   <style slot="header">
     main {
       width: 960px;
@@ -87,7 +96,7 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
         {
           posts.map((post) => (
             <li>
-              <a href={`/blog/${post.slug}/`}>
+              <a href={stripDomain(post.uri)}>
                 {post.featuredImage && (
                   <img
                     width={720}
@@ -99,6 +108,7 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
                   />
                 )}
                 <h4 class="title">{post.title}</h4>
+                <Fragment set:html={post.excerpt} />
                 <p class="date">
                   <FormattedDate date={new Date(post.date)} />
                 </p>

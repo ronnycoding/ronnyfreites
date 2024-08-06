@@ -10,7 +10,6 @@ const generalSettings = navData?.generalSettings;
   <nav>
     <h2><a href="/">{generalSettings?.title}</a></h2>
     <div class="internal-links">
-      <HeaderLink href="/">Home</HeaderLink>
       {
         navItems.map((item) => (
           <HeaderLink href={item.uri}>{item.label}</HeaderLink>
@@ -19,7 +18,7 @@ const generalSettings = navData?.generalSettings;
     </div>
     <div class="social-links">
       <a href="https://www.threads.net/@ronnycoding" target="_blank">
-        <span class="sr-only">Follow Ronny Freites on Threads</span>
+        <span class="sr-only">Follow {generalSettings?.title} on Threads</span>
         <svg
           width="32"
           height="32"
@@ -33,7 +32,7 @@ const generalSettings = navData?.generalSettings;
         >
       </a>
       <a href="https://x.com/ronnyfreites" target="_blank">
-        <span class="sr-only">Follow Ronny Freites on X</span>
+        <span class="sr-only">Follow {generalSettings?.title} on X</span>
         <svg
           width="32"
           height="32"
@@ -53,7 +52,7 @@ const generalSettings = navData?.generalSettings;
         >
       </a>
       <a href="https://github.com/ronnycoding/" target="_blank">
-        <span class="sr-only">Go to Ronny Freites's GitHub repo</span>
+        <span class="sr-only">Go to {generalSettings?.title}'s GitHub repo</span>
         <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
           ><path
             fill="currentColor"
@@ -62,7 +61,7 @@ const generalSettings = navData?.generalSettings;
         >
       </a>
       <a href="https://www.linkedin.com/in/ronnyfreites/" target="_blank">
-        <span class="sr-only">Follow Ronny Freites on LinkedIn</span>
+        <span class="sr-only">Follow {generalSettings?.title} on LinkedIn</span>
         <svg
           enable-background="new 0 0 32 32"
           aria-hidden="true"

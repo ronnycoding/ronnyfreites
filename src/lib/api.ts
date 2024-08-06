@@ -87,69 +87,85 @@ export async function homePagePostsQuery() {
   return res;
 }
 
-export async function getNodeBySlug(uri: string) {
+export async function getNodeByUri(uri: string) {
   const res = await fetchQuery<GetNodeByUriQuery>(
     `query GetNodeByURI($uri: String!) {
-        nodeByUri(uri: $uri) {
-          __typename
-          isContentNode
-          isTermNode
-          ... on Post {
-            id
-            title
-            date
-            uri
-            excerpt
-            content
-            categories {
-              nodes {
-                name
-                uri
-              }
+      nodeByUri(uri: $uri) {
+        __typename
+        isContentNode
+        isTermNode
+        ... on Post {
+          id
+          title
+          date
+          uri
+          excerpt
+          content
+          categories {
+            nodes {
+              name
+              uri
             }
-            featuredImage {
-              node {
-                srcSet
-                sourceUrl
-                altText
-                mediaDetails {
-                  height
-                  width
-                }
+          }
+          featuredImage {
+            node {
+              srcSet
+              sourceUrl
+              altText
+              mediaDetails {
+                height
+                width
               }
             }
           }
-          ... on Page {
-            id
-            title
-            uri
-            date
-            content
+          seo {
+            fullHead
           }
-          ... on Category {
-            id
-            name
-            posts {
-              nodes {
-                date
-                title
-                excerpt
-                uri
-                categories {
-                  nodes {
-                    name
-                    uri
-                  }
+        }
+        ... on Page {
+          id
+          title
+          uri
+          date
+          content
+          seo {
+            fullHead
+          }
+          featuredImage {
+            node {
+              srcSet
+              sourceUrl
+              altText
+              mediaDetails {
+                height
+                width
+              }
+            }
+          }
+        }
+        ... on Category {
+          id
+          name
+          posts {
+            nodes {
+              date
+              title
+              excerpt
+              uri
+              categories {
+                nodes {
+                  name
+                  uri
                 }
-                featuredImage {
-                  node {
-                    srcSet
-                    sourceUrl
-                    altText
-                    mediaDetails {
-                      height
-                      width
-                    }
+              }
+              featuredImage {
+                node {
+                  srcSet
+                  sourceUrl
+                  altText
+                  mediaDetails {
+                    height
+                    width
                   }
                 }
               }
@@ -157,6 +173,7 @@ export async function getNodeBySlug(uri: string) {
           }
         }
       }
+    }
   `,
     {
       uri: uri,

@@ -1,26 +1,35 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getPageBySlug } from "../lib/api";
-const pageData = await getPageBySlug(Astro.url.pathname.replace("/", ""));
+import { getNodeByUri } from "../lib/api";
+const nodeBySlug = await getNodeByUri(Astro.url.pathname.replace('/post/', ''));
+const data = nodeBySlug?.nodeByUri
+
+const replaceApiDomainWithLocal = (html) => {
+  return html.replaceAll(
+    import.meta.env.WORDPRESS_API_URL.replace("/graphql", ""),
+    `${Astro.url.protocol}//${Astro.url.host}`
+  );
+};
 
 Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
+const isPageOrPost = data?.__typename === "Page" || data?.__typename === "Post";
 ---
 
-<Layout seoTags={pageData?.page?.seo?.fullHead}>
+<Layout seoTags={isPageOrPost ? replaceApiDomainWithLocal(data.seo?.fullHead) || '' : undefined}>
   <Fragment slot="body">
     {
-      pageData?.page?.featuredImage && (
+      isPageOrPost && data?.featuredImage && (
         <img
           width={720}
           height={360}
-          src={pageData?.page?.featuredImage.node.sourceUrl}
-          alt={pageData?.page?.featuredImage.node.altText}
-          srcset={pageData?.page?.featuredImage.node.srcSet}
+          src={data?.featuredImage.node.sourceUrl}
+          alt={data?.featuredImage.node.altText}
+          srcset={data?.featuredImage.node.srcSet}
           loading="lazy"
         />
       )
     }
-    <h1>{pageData?.page?.title}</h1>
-    <Fragment set:html={pageData?.page?.content} />
+    {isPageOrPost && <h1>{data?.title}</h1>}
+    {isPageOrPost && <Fragment set:html={data?.content} />}
   </Fragment>
 </Layout>

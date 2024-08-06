@@ -1,5 +1,6 @@
 ---
 import { navQuery } from "../lib/api";
+import { stripDomain } from "../utils";
 import HeaderLink from "./HeaderLink.astro";
 const navData = await navQuery();
 const navItems = navData?.menus?.nodes?.[0]?.menuItems?.nodes ?? [];
@@ -12,7 +13,7 @@ const generalSettings = navData?.generalSettings;
     <div class="internal-links">
       {
         navItems.map((item) => (
-          <HeaderLink href={item.uri}>{item.label}</HeaderLink>
+          <HeaderLink href={stripDomain(item.uri)}>{item.label}</HeaderLink>
         ))
       }
     </div>

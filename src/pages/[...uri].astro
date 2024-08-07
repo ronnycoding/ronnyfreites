@@ -4,18 +4,11 @@ import { getNodeByUri } from "../lib/api";
 const nodeBySlug = await getNodeByUri(Astro.url.pathname.replace('/post/', ''));
 const data = nodeBySlug?.nodeByUri
 
-const replaceApiDomainWithLocal = (html) => {
-  return html.replaceAll(
-    import.meta.env.WORDPRESS_API_URL.replace("/graphql", ""),
-    `${Astro.url.protocol}//${Astro.url.host}`
-  );
-};
-
 Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 const isPageOrPost = data?.__typename === "Page" || data?.__typename === "Post";
 ---
 
-<Layout seoTags={isPageOrPost ? replaceApiDomainWithLocal(data.seo?.fullHead) || '' : undefined}>
+<Layout seoTags={isPageOrPost ? data.seo?.fullHead || '' : undefined}>
   <Fragment slot="body">
     {
       isPageOrPost && data?.featuredImage && (

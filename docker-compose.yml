@@ -1,0 +1,59 @@
+services:
+    wordpress:
+        container_name: wordpress
+        image: wordpress
+        restart: always
+        ports:
+            - 8086:80
+        environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_USER: exampleuser
+            WORDPRESS_DB_PASSWORD: examplepass
+            WORDPRESS_DB_NAME: exampledb
+        depends_on:
+            - db
+        volumes:
+            - ./wp/plugins:/var/www/html/wp-content/plugins
+            - ./wp/mu-plugins:/var/www/html/wp-content/mu-plugins
+            - ./wp/themes:/var/www/html/wp-content/themes
+            - ./wp/upgrade:/var/www/html/wp-content/upgrade
+            - ./wp/uploads:/var/www/html/wp-content/uploads
+            - ./wp/wp-config.php:/var/www/html/wp-config.php
+            - wordpress:/var/www/html
+
+    wpcli:
+        container_name: wpcli
+        depends_on:
+            - wordpress
+        image: wordpress:cli
+        user: 1000:1000
+        command: tail -f /dev/null
+        volumes:
+            - ./wp/plugins:/var/www/html/wp-content/plugins
+            - ./wp/mu-plugins:/var/www/html/wp-content/mu-plugins
+            - ./wp/themes:/var/www/html/wp-content/themes
+            - ./wp/upgrade:/var/www/html/wp-content/upgrade
+            - wordpress:/var/www/html
+            - ./wp/db-backups:/var/www/html/db-backups
+        environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_USER: exampleuser
+            WORDPRESS_DB_PASSWORD: examplepass
+            WORDPRESS_DB_NAME: exampledb
+
+    db:
+        image: mariadb:latest
+        restart: always
+        ports:
+            - 3307:3306
+        environment:
+            MYSQL_DATABASE: exampledb
+            MYSQL_USER: exampleuser
+            MYSQL_PASSWORD: examplepass
+            MYSQL_RANDOM_ROOT_PASSWORD: '1'
+        volumes:
+            - db:/var/lib/mysql
+
+volumes:
+    db:
+    wordpress:

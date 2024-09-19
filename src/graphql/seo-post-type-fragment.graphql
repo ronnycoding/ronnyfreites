@@ -1,0 +1,23 @@
+fragment PostTypeSEOMetadata on PostTypeSEO {
+    __typename
+    canonical
+    cornerstone
+    focuskw
+    metaDesc
+    metaKeywords
+    metaRobotsNofollow
+    metaRobotsNoindex
+    opengraphAuthor
+    opengraphDescription
+    opengraphModifiedTime
+    opengraphPublishedTime
+    opengraphPublisher
+    opengraphSiteName
+    opengraphTitle
+    opengraphType
+    opengraphUrl
+    readingTime
+    title
+    twitterDescription
+    twitterTitle
+}

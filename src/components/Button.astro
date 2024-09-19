@@ -1,24 +1,25 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
+import type { CoreButtons, CoreButton } from '@/utils/types';
 
-type AnchorProps = HTMLAttributes<'a'> & { type?: never };
-type ButtonProps = HTMLAttributes<'button'> & { href?: never };
+interface Props {
+  block: CoreButtons;
+}
 
-type Props = ButtonProps | AnchorProps;
+const { block } = Astro.props;
 
-const { href, class: className, ...rest } = Astro.props;
 const buttonClasses =
-    'inline-flex items-center justify-center px-6 py-2 font-serif text-sm leading-tight italic  text-main bg-main border border-main rounded-full transition hover:bg-muted';
+  'inline-flex items-center justify-center px-6 py-2 font-serif text-sm leading-tight italic text-main bg-main border border-main rounded-full transition hover:bg-muted';
+
 ---
 
-{
-    href ? (
-        <a href={href} class:list={[buttonClasses, className]} {...rest}>
-            <slot />
-        </a>
-    ) : (
-        <button class:list={[buttonClasses, className]} {...rest}>
-            <slot />
-        </button>
-    )
-}
+<div class="flex flex-wrap gap-4">
+  {block.innerBlocks.map((button: CoreButton) => (
+    <a
+      href={button.attributes.url || '#'}
+      class={buttonClasses}
+      title={button.attributes.title || undefined}
+      rel={button.attributes.rel || undefined}
+      set:html={button.attributes.text}
+    />
+  ))}
+</div>

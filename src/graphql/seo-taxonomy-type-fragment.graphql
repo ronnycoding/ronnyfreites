@@ -1,0 +1,33 @@
+fragment TaxonomySEOMetadata on TaxonomySEO {
+    canonical
+    cornerstone
+    focuskw
+    fullHead
+    metaDesc
+    metaKeywords
+    metaRobotsNofollow
+    metaRobotsNoindex
+    opengraphAuthor
+    opengraphDescription
+    opengraphImage {
+        altText
+        sourceUrl
+    }
+    opengraphModifiedTime
+    opengraphPublishedTime
+    opengraphPublisher
+    opengraphSiteName
+    opengraphTitle
+    opengraphType
+    opengraphUrl
+    schema {
+        raw
+    }
+    title
+    twitterDescription
+    twitterImage {
+        altText
+        sourceUrl
+    }
+    twitterTitle
+}

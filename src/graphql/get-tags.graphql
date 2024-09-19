@@ -1,0 +1,28 @@
+query GetTags($baseUrl: String!, $cursor: String) {
+    nodeByUri(uri: $baseUrl) {
+        __typename
+        ... on Page {
+            id
+            seo {
+                ...PostTypeSEOMetadata
+            }
+        }
+    }
+    tags(where: { orderby: NAME, hideEmpty: true }, first: 10, after: $cursor) {
+        __typename
+        edges {
+            node {
+                ... on Tag {
+                    __typename
+                    id
+                    name
+                    description
+                    slug
+                    uri
+                    count
+                }
+            }
+        }
+    }
+    ...GeneralSettings
+}

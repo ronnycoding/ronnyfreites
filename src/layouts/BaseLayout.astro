@@ -1,19 +1,52 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-import BaseHead, { type Props as HeadProps } from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import Nav from '../components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import Header from '@/components/Header.astro';
+import Nav from '@/components/Nav.astro';
+import Seo from '@/components/Seo.astro';
+import type { Menu } from '@/utils/types'
+import type { PostTypeSeo, TaxonomySeo } from '@/gql/sdk';
 
-export type Props = HeadProps & { showHeader?: boolean };
+import '@/styles/global.css';
 
-const { showHeader = true, ...head } = Astro.props;
+export type Props = {
+  showHeader?: boolean,
+  primaryMenu?: Menu | null,
+  footerMenu?: Menu | null,
+  title: string,
+  description:
+  string,
+  seo: PostTypeSeo | TaxonomySeo
+};
+
+const {
+  showHeader = true,
+  title,
+  description,
+  primaryMenu,
+  footerMenu,
+  seo,
+  ...head
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="antialiased break-words">
     <head>
-        <BaseHead {...head} />
+        <!-- <BaseHead {...head} /> -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="generator" content={Astro.generator} />
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap"
+            rel="stylesheet"
+        />
+
+        <Seo seo={seo} baseUrl="https://ronnyfreites.com" />
         <script>
             if (localStorage.theme === 'dark') {
                 document.documentElement.classList.add('dark');
@@ -23,12 +56,12 @@ const { showHeader = true, ...head } = Astro.props;
     </head>
     <body class="bg-main text-main">
         <div class="flex flex-col min-h-screen px-4 md:px-8">
-            <Nav />
-            {showHeader && <Header />}
+            <Nav menu={primaryMenu} />
+            {showHeader && <Header title={title} description={description} />}
             <main class="grow w-full max-w-3xl mx-auto">
                 <slot />
             </main>
-            <Footer />
+            <Footer menu={footerMenu} />
         </div>
     </body>
 </html>

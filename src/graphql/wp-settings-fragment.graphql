@@ -1,0 +1,39 @@
+fragment GeneralSettings on RootQuery {
+    primaryMenu: menus(where: { location: PRIMARY }) {
+        nodes {
+            __typename
+            name
+            menuItems {
+                nodes {
+                    uri
+                    url
+                    order
+                    label
+                    id
+                    parentId
+                }
+            }
+        }
+    }
+    footerMenu: menus(where: { location: FOOTER }) {
+        nodes {
+            __typename
+            name
+            menuItems {
+                nodes {
+                    uri
+                    url
+                    order
+                    label
+                    id
+                    parentId
+                }
+            }
+        }
+    }
+    generalSettings {
+        title
+        url
+        description
+    }
+}

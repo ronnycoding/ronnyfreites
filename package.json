@@ -7,19 +7,30 @@
         "start": "astro dev",
         "build": "astro build",
         "preview": "astro preview",
-        "astro": "astro"
+        "astro": "astro",
+        "codegen": "graphql-codegen --config codegen.ts"
     },
     "dependencies": {
         "@astrojs/mdx": "^3.1.6",
         "@astrojs/rss": "^4.0.7",
         "@astrojs/sitemap": "^3.1.6",
         "@astrojs/tailwind": "^5.1.1",
-        "astro": "^4.15.7",
+        "@astrojs/vercel": "^7.8.1",
+        "astro": "^4.15.8",
+        "graphql-tag": "^2.12.6",
         "marked": "^13.0.2",
         "tailwindcss": "^3.4.6"
     },
     "devDependencies": {
+        "@graphql-codegen/cli": "^5.0.2",
+        "@graphql-codegen/client-preset": "^4.3.3",
+        "@graphql-codegen/typescript": "^4.0.9",
+        "@graphql-codegen/typescript-graphql-request": "^6.2.0",
+        "@graphql-codegen/typescript-operations": "^4.2.3",
+        "@graphql-typed-document-node/core": "^3.2.0",
         "@tailwindcss/typography": "^0.5.13",
+        "graphql": "^16.9.0",
+        "graphql-request": "^6.1.0",
         "prettier": "^3.3.2",
         "prettier-plugin-tailwindcss": "^0.6.5"
     }

@@ -1,65 +1,106 @@
-# Dante - Astro & Tailwind CSS Theme by justgoodui.com
+# Dante - Astro & Tailwind CSS Theme with WordPress Integration
 
-Dante is a single-author blog and portfolio theme for Astro.js. Featuring a minimal, slick, responsive and content-focused design. For more Astro.js themes please check [justgoodui.com](https://justgoodui.com/).
+Dante is a single-author blog and portfolio theme for Astro.js, now featuring seamless integration with WordPress as a headless CMS. This theme combines a minimal, slick, responsive design with the power of WordPress content management and GraphQL API.
 
 ![Dante Astro.js Theme](public/dante-preview.jpg)
 
-[![Deploy to Netlify Button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/JustGoodUI/dante-astro-theme)
-
-If you click this☝️ button, it will create a new repo for you that looks exactly like this one, and sets that repo up immediately for deployment on Netlify.
-
 ## Theme Features:
 
-- ✅ Dark and light color mode
-- ✅ Hero section with bio
-- ✅ Portfolio collection
-- ✅ Pagination support
-- ✅ Post tags support
-- ✅ Subscription form
-- ✅ View transitions
-- ✅ Tailwind CSS
-- ✅ Mobile-first responsive layout
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+- ✅ All original Dante theme features (Dark/light mode, Hero section, Portfolio collection, Pagination, etc.)
+- ✅ WordPress integration as a headless CMS
+- ✅ GraphQL API support for efficient data fetching
+- ✅ TypeScript integration for improved type safety
+- ✅ Docker Compose setup for easy WordPress and WP-CLI configuration
 
-## Template Integrations
+## New Integrations
 
-- @astrojs/tailwind - https://docs.astro.build/en/guides/integrations-guide/tailwind/
-- @astrojs/sitemap - https://docs.astro.build/en/guides/integrations-guide/sitemap/
-- @astrojs/mdx - https://docs.astro.build/en/guides/markdown-content/
-- @astrojs/rss - https://docs.astro.build/en/guides/rss/
+- @astrojs/vercel - for serverless deployment
+- graphql-request - for making GraphQL queries to WordPress
+- @graphql-codegen - for generating TypeScript types from GraphQL schema
+
+## WordPress Plugins
+
+The following WordPress plugins are required for full functionality:
+
+- WPGraphQL
+- WPGraphQL for ACF
+- Advanced Custom Fields (ACF)
 
 ## Project Structure
 
-Inside of Dante Astro theme, you'll see the following folders and files:
+The project structure remains largely the same, with additional files for GraphQL and TypeScript integration:
 
 ```text
-├── public/
+├── ...
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── data/
-│   ├── icons/
-│   ├── layouts/
-│   ├── pages/
-│   ├── styles/
-│   └── utils/
-├── astro.config.mjs
-├── package.json
-├── README.md
-├── tailwind.config.cjs
-└── tsconfig.json
+│   ├── ...
+│   ├── generated/   # Contains generated TypeScript types
+│   ├── lib/         # GraphQL query functions
+│   └── ...
+├── wp/              # WordPress files and directories
+├── codegen.ts       # GraphQL Code Generator configuration
+├── docker-compose.yml # Docker Compose configuration
+├── ...
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Setup Instructions
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro (`.astro`) components.
+1. Make sure you have Docker and Docker Compose installed on your system.
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+2. Clone this repository and navigate to the project directory.
 
-Any static assets, like images, can be placed in the `public/` directory.
+3. Start the WordPress and database containers:
+   ```
+   docker-compose up -d
+   ```
+
+4. Access the WordPress admin panel at `http://localhost:8086/wp-admin` and complete the installation process.
+
+5. Install and activate required WordPress plugins using WP-CLI:
+   ```
+   docker-compose run --rm wpcli wp plugin install wp-graphql advanced-custom-fields wpgraphql-acf --activate
+   ```
+
+6. Configure your `.env` file with your WordPress GraphQL endpoint:
+   ```
+   WP_GRAPHQL_URL=http://localhost:8086/graphql
+   ```
+
+7. Install project dependencies:
+   ```
+   npm install
+   ```
+
+8. Generate TypeScript types from your GraphQL schema:
+   ```
+   npm run codegen
+   ```
+
+9. Start the Astro development server:
+   ```
+   npm run dev
+   ```
+
+## WP-CLI Usage
+
+You can use WP-CLI to manage your WordPress installation. Here are some example commands:
+
+- List installed plugins:
+  ```
+  docker-compose run --rm wpcli wp plugin list
+  ```
+
+- Update WordPress core:
+  ```
+  docker-compose run --rm wpcli wp core update
+  ```
+
+- Create a new post:
+  ```
+  docker-compose run --rm wpcli wp post create --post_type=post --post_title='Hello World' --post_status=publish
+  ```
+
+For more WP-CLI commands, refer to the [official WP-CLI documentation](https://developer.wordpress.org/cli/commands/).
 
 ## Astro.js Commands
 
@@ -73,20 +114,14 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## Want to learn more about Astro.js?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| `npm run codegen`         | Generate TypeScript types from GraphQL schema    |
 
 ## Credits
 
-- Demo content generate with [Chat GPT](https://chat.openai.com/)
+- Original Dante theme design and implementation by [justgoodui.com](https://justgoodui.com/)
+- WordPress headless CMS integration, GraphQL implementation, TypeScript setup, and Docker configuration by [ronnyfreites.com](https://ronnyfreites.com/)
 - Images for demo content from [Unsplash](https://unsplash.com/)
-
-## Astro Themes by Just Good UI
-
-- [Ovidius](https://github.com/JustGoodUI/ovidius-astro-theme) is a free single author blog theme.
 
 ## License
 
-Licensed under the [GPL-3.0](https://github.com/JustGoodUI/dante-astro-theme/blob/main/LICENSE) license.
+Licensed under the [GPL-3.0](https://github.com/RonnyFrayRegato/dante-astro-theme-wp/blob/main/LICENSE) license.

@@ -1,0 +1,74 @@
+---
+import { isGraphType } from "@/utils/types"
+import type { WPBlock } from "@/utils/types"
+import List from "@/components/List.astro"
+import Heading from "@/components/Heading.astro"
+import Button from '@/components/Button.astro';
+
+export type Props = {
+  blocks: WPBlock[]
+}
+
+const { blocks } = Astro.props as Props
+
+function transformImageData(data) {
+  // Sort sizes from largest to smallest
+  const sortedSizes = data.mediaDetails.sizes.sort((a, b) =>
+    (b.width * b.height) - (a.width * a.height)
+  );
+
+  // Get the largest image for the src attribute
+  const largestImage = sortedSizes[0];
+
+  // Create the srcset string
+  const srcset = sortedSizes
+    .map(size => `${size.sourceUrl} ${size.width}w`)
+    .join(', ');
+
+  // Create the image object expected by the HTML structure
+  const image = {
+    src: largestImage.sourceUrl,
+    srcset: srcset,
+    alt: data.mediaDetails.meta.title || '',
+    caption: data.mediaDetails.meta.caption || ''
+  };
+
+  return image;
+}
+---
+<div class="max-w-none prose prose-dante sm:prose-lg my-4">
+<!-- image -->
+{blocks.map(block => {
+  if (isGraphType(block, 'CoreImage')) {
+    const transformedImage = transformImageData(block);
+    return (
+      <figure key={block.clientId}>
+        <img
+          class="w-full"
+          src={transformedImage.src}
+          srcset={transformedImage.srcset}
+          loading="lazy"
+          decoding="async"
+          alt={transformedImage.alt}
+        />
+        {transformedImage.caption && <figcaption class="mt-1.5 text-xs sm:text-sm">{transformedImage.caption}</figcaption>}
+      </figure>
+    )
+  }
+  if (isGraphType(block, 'CoreParagraph')) {
+    return <p set:html={block.attributes.content}></p>
+  }
+  if (isGraphType(block, 'CoreList')) {
+    return <List key={block.clientId} block={block} />
+  }
+  if (isGraphType(block, 'CoreHeading')) {
+    return <Heading  key={block.clientId} block={block} />
+  }
+  if (isGraphType(block, 'CoreButtons')) {
+    return <Button key={block.clientId} block={block} />
+  }
+  if (block) {
+    return <pre>{JSON.stringify(block, null, 2)}</pre>
+  }
+})}
+</div>

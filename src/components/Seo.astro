@@ -1,0 +1,70 @@
+---
+import type { PostTypeSeo, TaxonomySeo } from '@/gql/sdk';
+
+interface Props {
+  seo?: PostTypeSeo | TaxonomySeo;
+  baseUrl: string;
+}
+
+const { seo, baseUrl } = Astro.props;
+
+function replaceUrls(url: string): string {
+  // Don't replace image URLs
+  if (url?.match(/\.(jpeg|jpg|gif|png)$/)) {
+    return url;
+  }
+  return url?.startsWith('http') ? baseUrl : url;
+}
+
+function getImageUrl(image: { sourceUrl?: string } | undefined): string | undefined {
+  return image?.sourceUrl ? replaceUrls(image.sourceUrl) : undefined;
+}
+---
+
+{seo && (
+  <>
+    <title>{seo.title}</title>
+    <link rel="canonical" href={replaceUrls(seo.canonical || '')} />
+    <meta name="description" content={seo.metaDesc} />
+    <meta name="keywords" content={seo.metaKeywords} />
+    <meta name="robots" content={`${seo.metaRobotsNoindex},${seo.metaRobotsNofollow}`} />
+
+    <!-- OpenGraph tags -->
+    <meta property="og:title" content={seo.opengraphTitle} />
+    <meta property="og:description" content={seo.opengraphDescription} />
+    <meta property="og:type" content={seo.opengraphType} />
+    <meta property="og:url" content={replaceUrls(seo.opengraphUrl || '')} />
+    <meta property="og:site_name" content={seo.opengraphSiteName} />
+    <meta property="og:author" content={seo.opengraphAuthor} />
+    <meta property="og:publisher" content={seo.opengraphPublisher} />
+    <meta property="og:published_time" content={seo.opengraphPublishedTime} />
+    <meta property="og:modified_time" content={seo.opengraphModifiedTime} />
+    {seo.opengraphImage && (
+      <>
+        <meta property="og:image" content={getImageUrl(seo.opengraphImage)} />
+        <meta property="og:image:alt" content={seo.opengraphImage.altText || ''} />
+      </>
+    )}
+
+    <!-- Twitter tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.twitterTitle} />
+    <meta name="twitter:description" content={seo.twitterDescription} />
+    {seo.twitterImage && (
+      <>
+        <meta name="twitter:image" content={getImageUrl(seo.twitterImage)} />
+        <meta name="twitter:image:alt" content={seo.twitterImage.altText || ''} />
+      </>
+    )}
+
+    <!-- Other meta tags -->
+    <meta name="focus-keyword" content={seo.focuskw} />
+
+    {seo.cornerstone && <meta name="cornerstone-content" content="true" />}
+
+    {seo.schema && <script type="application/ld+json" set:html={seo.schema.raw} />}
+
+    {/* Include fullHead if it exists and is not empty */}
+    {seo.fullHead && <Fragment set:html={seo.fullHead} />}
+  </>
+)}

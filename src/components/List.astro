@@ -1,0 +1,31 @@
+---
+import type { CoreList, CoreListItem } from '@/utils/types';
+
+type Props = {
+  block: CoreList;
+};
+
+const { block } = Astro.props;
+
+// Helper function to render list items
+const renderListItems = (items: CoreListItem[]): string => {
+  return items.map((item) => {
+    const content = item.attributes?.content || '';
+    let innerContent = '';
+    if (item.innerBlocks && item.innerBlocks.length > 0) {
+      innerContent = `<ul>${renderListItems(item.innerBlocks)}</ul>`;
+    }
+    return `<li>${content}${innerContent}</li>`;
+  }).join('');
+};
+
+const listContent = renderListItems(block.innerBlocks);
+---
+
+<div class="max-w-none prose prose-dante sm:prose-lg my-4">
+  {block.attributes.ordered ? (
+    <ol set:html={listContent} />
+  ) : (
+    <ul set:html={listContent} />
+  )}
+</div>

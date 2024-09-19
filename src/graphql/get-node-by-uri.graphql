@@ -1,0 +1,228 @@
+query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
+    nodeByUri(uri: $uri) {
+        __typename
+        isContentNode
+        isTermNode
+        ... on Post {
+            id
+            title
+            date
+            uri
+            excerpt
+            slug
+            categories {
+                nodes {
+                    name
+                    uri
+                }
+            }
+            featuredImage {
+                node {
+                    srcSet
+                    sourceUrl
+                    altText
+                }
+            }
+            seo {
+                ...PostTypeSEOMetadata
+            }
+            editorBlocks(flat: false) {
+                ...WPBlocks
+                ... on CoreMediaText {
+                    __typename
+                    clientId
+                    parentClientId
+                    attributes {
+                        mediaAlt
+                        mediaUrl
+                    }
+                    innerBlocks {
+                        ...WPBlocks
+                    }
+                }
+            }
+        }
+        ... on Page {
+            id
+            title
+            uri
+            slug
+            date
+            featuredImage {
+                node {
+                    srcSet
+                    sourceUrl
+                    altText
+                    mediaDetails {
+                        height
+                        width
+                    }
+                }
+            }
+            seo {
+                ...PostTypeSEOMetadata
+            }
+            editorBlocks(flat: false) {
+                ...WPBlocks
+                ... on CoreMediaText {
+                    __typename
+                    clientId
+                    parentClientId
+                    attributes {
+                        mediaAlt
+                        mediaUrl
+                    }
+                    innerBlocks {
+                        ...WPBlocks
+                    }
+                }
+            }
+        }
+        ... on Category {
+            id
+            name
+            posts {
+                edges {
+                    node {
+                        ... on Post {
+                            date
+                            title
+                            excerpt
+                            uri
+                            slug
+                            categories {
+                                nodes {
+                                    name
+                                    uri
+                                }
+                            }
+                            featuredImage {
+                                node {
+                                    srcSet
+                                    sourceUrl
+                                    altText
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            seo {
+                ...TaxonomySEOMetadata
+            }
+        }
+        ... on Tag {
+            id
+            name
+            posts {
+                edges {
+                    node {
+                        ... on Post {
+                            date
+                            title
+                            excerpt
+                            uri
+                            slug
+                            categories {
+                                nodes {
+                                    name
+                                    uri
+                                }
+                            }
+                            featuredImage {
+                                node {
+                                    srcSet
+                                    sourceUrl
+                                    altText
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            seo {
+                ...TaxonomySEOMetadata
+            }
+        }
+    }
+    posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }], categoryName: $uri }, first: 10, after: $cursor) {
+        __typename
+        edges {
+            node {
+                __typename
+                ... on Post {
+                    id
+                    title
+                    date
+                    uri
+                    excerpt
+                    slug
+                    categories(first: 5) {
+                        edges {
+                            node {
+                                ... on Category {
+                                    __typename
+                                    id
+                                    name
+                                    slug
+                                }
+                            }
+                        }
+                    }
+                    tags {
+                        edges {
+                            node {
+                                ... on Tag {
+                                    id
+                                    name
+                                    slug
+                                    uri
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cursor
+        }
+    }
+    tag(id: $idUri, idType: URI) {
+        ... on Tag {
+            id
+            name
+            description
+            slug
+            uri
+            posts {
+                edges {
+                    node {
+                        ... on Post {
+                            date
+                            title
+                            excerpt
+                            uri
+                            slug
+                            categories {
+                                nodes {
+                                    name
+                                    uri
+                                }
+                            }
+                            featuredImage {
+                                node {
+                                    srcSet
+                                    sourceUrl
+                                    altText
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            seo {
+                ...TaxonomySEOMetadata
+            }
+        }
+    }
+    ...GeneralSettings
+}

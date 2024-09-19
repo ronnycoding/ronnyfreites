@@ -1,23 +1,34 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Button from '../components/Button.astro';
-import Hero from '../components/Hero.astro';
-import PostPreview from '../components/PostPreview.astro';
-import ProjectPreview from '../components/ProjectPreview.astro';
-import siteConfig from '../data/site-config';
-import { sortItemsByDateDesc } from '../utils/data-utils';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getNodeByUri } from '@/lib/api';
+import { isGraphType, isWPBlock } from '@/utils/types'
+import WPBlock from '@/components/WPBlock.astro';
 
-const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
-const featuredPosts = posts.filter(({ data }) => data.isFeatured);
+const nodeByUri = await getNodeByUri('new-home');
+const pageData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Page") ? nodeByUri.nodeByUri : null;
 
-const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
-const featuredProjects = projects.filter(({ data }) => data.isFeatured);
+const blocks =
+  (pageData &&
+    pageData.editorBlocks?.filter(isWPBlock)) ??
+  [];
 ---
 
-<BaseLayout description={siteConfig.description} image={siteConfig.image}>
-    <Hero />
-    {
+<BaseLayout
+  title={nodeByUri?.generalSettings?.title ?? ''}
+  description={nodeByUri?.generalSettings?.description ?? ''}
+  image={pageData?.featuredImage?.node ? {
+    alt: pageData?.featuredImage?.node?.altText ?? '',
+    src: pageData?.featuredImage?.node?.sourceUrl ?? '',
+  } : undefined}
+  primaryMenu={nodeByUri?.primaryMenu?.nodes?.[0] && isGraphType(nodeByUri?.primaryMenu?.nodes?.[0], 'Menu') ? nodeByUri?.primaryMenu?.nodes?.[0] : null}
+  footerMenu={nodeByUri?.footerMenu?.nodes?.[0] && isGraphType(nodeByUri?.footerMenu?.nodes?.[0], 'Menu') ? nodeByUri?.footerMenu?.nodes?.[0] : null}
+  seo={pageData?.seo}
+>
+    {pageData?.title && (
+        <h1 class="text-3xl leading-tight font-serif font-medium sm:text-5xl sm:leading-tight mb-6">{pageData.title}</h1>
+    )}
+    <WPBlock blocks={blocks} />
+    <!-- {
         featuredProjects?.length > 0 && (
             <div class="mb-16 sm:mb-24">
                 <h2 class="mb-12 text-xl font-serif italic sm:mb-16 sm:text-2xl">Projects</h2>
@@ -42,5 +53,5 @@ const featuredProjects = projects.filter(({ data }) => data.isFeatured);
                 </div>
             </div>
         )
-    }
+    } -->
 </BaseLayout>

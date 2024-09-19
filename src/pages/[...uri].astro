@@ -1,0 +1,62 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getNodeByUri } from '@/lib/api';
+import { isGraphType, isWPBlock } from '@/utils/types'
+import WPBlock from '@/components/WPBlock.astro';
+// import Pagination from '@/components/Pagination.astro';
+import PostPreview from '@/components/PostPreview.astro';
+
+const nodeByUri = await getNodeByUri(Astro.url.pathname);
+if (!nodeByUri?.nodeByUri) {
+  return new Response("Not found", { status: 404 });
+}
+
+const pageData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Page") ? nodeByUri.nodeByUri : null;
+const postData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Post") ? nodeByUri.nodeByUri : null;
+const categoryData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Category") ? nodeByUri.nodeByUri : null;
+const tagData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Tag") ? nodeByUri.nodeByUri : null;
+const title = postData?.title ?? pageData?.title ?? categoryData?.name ?? tagData?.name ?? '';
+
+let posts = [];
+if (nodeByUri?.posts?.edges && nodeByUri?.posts?.edges.length > 0) {
+  posts = nodeByUri?.posts?.edges;
+} else if (categoryData?.posts?.edges && categoryData?.posts?.edges.length > 0) {
+  posts = categoryData.posts.edges;
+} else if (tagData?.posts?.edges && tagData?.posts?.edges.length > 0) {
+  posts = tagData.posts.edges;
+}
+
+let blocks = []
+if (pageData?.editorBlocks && pageData?.editorBlocks?.length > 0) {
+  blocks = pageData?.editorBlocks?.filter(isWPBlock)
+} else if (postData?.editorBlocks && postData?.editorBlocks?.length > 0) {
+  blocks = postData?.editorBlocks?.filter(isWPBlock)
+}
+
+const seo = nodeByUri?.nodeByUri?.seo
+---
+
+<BaseLayout
+  title={nodeByUri?.generalSettings?.title ?? ''}
+  description={nodeByUri?.generalSettings?.description ?? ''}
+  image={pageData?.featuredImage?.node && {
+    alt: pageData?.featuredImage?.node?.altText ?? '',
+    src: pageData?.featuredImage?.node?.sourceUrl ?? '',
+  }}
+  showHeader={false}
+  primaryMenu={nodeByUri?.primaryMenu?.nodes?.[0] && isGraphType(nodeByUri?.primaryMenu?.nodes?.[0], 'Menu') ? nodeByUri?.primaryMenu?.nodes?.[0] : null}
+  footerMenu={nodeByUri?.footerMenu?.nodes?.[0] && isGraphType(nodeByUri?.footerMenu?.nodes?.[0], 'Menu') ? nodeByUri?.footerMenu?.nodes?.[0] : null}
+  seo={seo}
+>
+    {title && (
+        <header class="mb-8">
+            <h1 class="text-3xl leading-tight font-serif font-medium sm:text-5xl sm:leading-tight">{title}</h1>
+        </header>
+    )}
+    <WPBlock blocks={blocks} />
+    {posts?.map(edge => {
+        return (
+          <PostPreview post={edge.node} cursor={edge?.cursor || ''} class="mb-10 sm:mb-12" />
+        )
+    })}
+</BaseLayout>

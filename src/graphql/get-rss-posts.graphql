@@ -1,0 +1,29 @@
+query GetRssPosts {
+    posts(where: { orderby: [{ field: DATE, order: DESC }] }, first: 1000) {
+        __typename
+        edges {
+            node {
+                ... on Post {
+                    __typename
+                    id
+                    slug
+                    uri
+                    title
+                    content
+                    excerpt
+                    date
+                    author {
+                        node {
+                            name
+                        }
+                    }
+                }
+            }
+        }
+    }
+    generalSettings {
+        title
+        url
+        description
+    }
+}

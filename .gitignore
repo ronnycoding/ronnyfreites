@@ -19,3 +19,19 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# vercel
+.vercel
+
+# Ignore everything in wp
+/wp/*
+
+# Don't ignore the plugins directory
+!/wp/plugins/
+
+# Ignore everything in the plugins directory
+/wp/plugins/*
+
+# But don't ignore these specific directories
+!/wp/plugins/register-acf-blocks/
+!/wp/plugins/contact-form-7-capabilities/

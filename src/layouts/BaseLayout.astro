@@ -33,25 +33,36 @@ const {
 <!doctype html>
 <html lang="en" class="antialiased break-words">
     <head>
-        <!-- <BaseHead {...head} /> -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="generator" content={Astro.generator} />
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <!-- Preconnect to Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap"
-            rel="stylesheet"
-        />
+
+        <!-- Preload fonts -->
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" />
+
+        <!-- Load fonts asynchronously -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" media="print" onload="this.media='all'" />
+
+        <!-- Fallback in case JavaScript is disabled -->
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" />
+        </noscript>
 
         <Seo seo={seo} baseUrl="https://ronnyfreites.com" />
+
+        <!-- Theme script -->
         <script>
-            if (localStorage.theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            }
+            (function() {
+                if (localStorage.theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                }
+            })();
         </script>
+
         <ViewTransitions />
     </head>
     <body class="bg-main text-main">

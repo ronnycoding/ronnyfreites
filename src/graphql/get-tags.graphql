@@ -1,10 +1,25 @@
-query GetTags($baseUrl: String!, $cursor: String) {
-    nodeByUri(uri: $baseUrl) {
+query GetTags($cursor: String) {
+    nodeByUri(uri: "tag") {
         __typename
         ... on Page {
             id
             seo {
                 ...PostTypeSEOMetadata
+            }
+            editorBlocks(flat: false) {
+                ...WPBlocks
+                ... on CoreMediaText {
+                    __typename
+                    clientId
+                    parentClientId
+                    attributes {
+                        mediaAlt
+                        mediaUrl
+                    }
+                    innerBlocks {
+                        ...WPBlocks
+                    }
+                }
             }
         }
     }

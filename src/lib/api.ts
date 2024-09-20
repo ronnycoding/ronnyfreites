@@ -18,7 +18,7 @@ export const getNodeByUri = async (uri: string) => {
 };
 
 export const getAllTags = async (cursor?: string) => {
-    return sdk.GetTags({ baseUrl: 'new-home', cursor });
+    return sdk.GetTags({ cursor });
 };
 
 export const getRssPosts = async () => {

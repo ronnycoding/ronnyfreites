@@ -1,26 +1,28 @@
 ---
 import ArrowRight from '@/icons/ArrowRight.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Subscribe from '@/components/Subscribe.astro';
-import { isGraphType } from '@/utils/types'
+// import Subscribe from '@/components/Subscribe.astro';
+import { isGraphType, isWPBlock } from '@/utils/types'
+import WPBlock from '@/components/WPBlock.astro';
 
 import { getAllTags } from '@/lib/api';
 
 const allTags = await getAllTags();
-
 const seo = allTags?.nodeByUri?.seo;
+const blocks = allTags?.nodeByUri?.editorBlocks ?? []
 Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 
 <BaseLayout
-    title="Tags"
-    description="Explore tag directory for easy navigation and discovery. Find a wide range of topics, articles, and insights organized by tags, making it effortless to locate the content that interests you most."
+    title={allTags?.generalSettings?.title ?? ''}
+    description={allTags?.generalSettings?.description ?? ''}
     showHeader={false}
     primaryMenu={allTags?.primaryMenu?.nodes?.[0] && isGraphType(allTags?.primaryMenu?.nodes?.[0], 'Menu') ? allTags?.primaryMenu?.nodes?.[0] : null}
     footerMenu={allTags?.footerMenu?.nodes?.[0] && isGraphType(allTags?.footerMenu?.nodes?.[0], 'Menu') ? allTags?.footerMenu?.nodes?.[0] : null}
     seo={seo}
 >
     <h1 class="mb-12 text-2xl font-serif italic sm:mb-16 sm:text-4xl">All Tags</h1>
+    <WPBlock blocks={blocks} />
     {
         allTags.tags?.edges?.map((tag) =>
             (

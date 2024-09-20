@@ -7,30 +7,28 @@ import WPBlock from '@/components/WPBlock.astro';
 import PostPreview from '@/components/PostPreview.astro';
 
 const nodeByUri = await getNodeByUri(Astro.url.pathname);
-if (!nodeByUri?.nodeByUri) {
-  return new Response("Not found", { status: 404 });
-}
 
-const pageData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Page") ? nodeByUri.nodeByUri : null;
-const postData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Post") ? nodeByUri.nodeByUri : null;
-const categoryData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Category") ? nodeByUri.nodeByUri : null;
-const tagData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Tag") ? nodeByUri.nodeByUri : null;
+const nodeData = nodeByUri?.nodeByUri;
+const dataTypes = ['Page', 'Post', 'Category', 'Tag'];
+const [pageData, postData, categoryData, tagData] = dataTypes.map(type =>
+  nodeData && isGraphType(nodeData, type) ? nodeData : null
+);
+
 const title = postData?.title ?? pageData?.title ?? categoryData?.name ?? tagData?.name ?? '';
 
-let posts = [];
-if (nodeByUri?.posts?.edges && nodeByUri?.posts?.edges.length > 0) {
-  posts = nodeByUri?.posts?.edges;
-} else if (categoryData?.posts?.edges && categoryData?.posts?.edges.length > 0) {
-  posts = categoryData.posts.edges;
-} else if (tagData?.posts?.edges && tagData?.posts?.edges.length > 0) {
-  posts = tagData.posts.edges;
-}
+const posts = nodeByUri?.posts?.edges?.length > 0 ? nodeByUri.posts.edges :
+              categoryData?.posts?.edges?.length > 0 ? categoryData.posts.edges :
+              tagData?.posts?.edges?.length > 0 ? tagData.posts.edges :
+              [];
 
-let blocks = []
-if (pageData?.editorBlocks && pageData?.editorBlocks?.length > 0) {
-  blocks = pageData?.editorBlocks?.filter(isWPBlock)
-} else if (postData?.editorBlocks && postData?.editorBlocks?.length > 0) {
-  blocks = postData?.editorBlocks?.filter(isWPBlock)
+const blocks = (pageData?.editorBlocks?.length > 0 ? pageData.editorBlocks :
+                postData?.editorBlocks?.length > 0 ? postData.editorBlocks :
+                [])
+               .filter(isWPBlock);
+
+// Validation: Check if there's no content and return 404 if true
+if (!title && posts.length === 0 && blocks.length === 0) {
+  return Astro.redirect('/404', 404);
 }
 
 const seo = nodeByUri?.nodeByUri?.seo

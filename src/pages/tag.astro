@@ -14,8 +14,11 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 
 <BaseLayout
-    title={allTags?.generalSettings?.title ?? ''}
-    description={allTags?.generalSettings?.description ?? ''}
+    title={allTags?.nodeByUri?.title ?? ''}
+    image={allTags?.nodeByUri?.featuredImage?.node ? {
+      alt: allTags?.nodeByUri?.featuredImage?.node?.altText ?? '',
+      src: allTags?.nodeByUri?.featuredImage?.node?.sourceUrl ?? '',
+    } : undefined}
     showHeader={false}
     primaryMenu={allTags?.primaryMenu?.nodes?.[0] && isGraphType(allTags?.primaryMenu?.nodes?.[0], 'Menu') ? allTags?.primaryMenu?.nodes?.[0] : null}
     footerMenu={allTags?.footerMenu?.nodes?.[0] && isGraphType(allTags?.footerMenu?.nodes?.[0], 'Menu') ? allTags?.footerMenu?.nodes?.[0] : null}

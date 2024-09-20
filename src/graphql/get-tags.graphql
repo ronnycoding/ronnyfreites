@@ -6,6 +6,13 @@ query GetTags($cursor: String) {
             seo {
                 ...PostTypeSEOMetadata
             }
+            featuredImage {
+                node {
+                    srcSet
+                    sourceUrl
+                    altText
+                }
+            }
             editorBlocks(flat: false) {
                 ...WPBlocks
                 ... on CoreMediaText {

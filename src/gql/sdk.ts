@@ -26606,7 +26606,7 @@ export type GetTagsQuery = (
   { __typename?: 'RootQuery', nodeByUri?: { __typename: 'BlockEditorPreview' } | { __typename: 'Category' } | { __typename: 'Comment' } | { __typename: 'ContentType' } | { __typename: 'GraphqlDocument' } | { __typename: 'GraphqlDocumentGroup' } | { __typename: 'MediaItem' } | { __typename: 'Page', id: string, seo?: (
       { __typename?: 'PostTypeSEO' }
       & PostTypeSeoMetadataFragment
-    ) | null, editorBlocks?: Array<(
+    ) | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null } } | null, editorBlocks?: Array<(
       { __typename?: 'CoreArchives' }
       & WpBlocks_CoreArchives_Fragment
     ) | (
@@ -27867,6 +27867,13 @@ export const GetTagsDocument = gql`
       id
       seo {
         ...PostTypeSEOMetadata
+      }
+      featuredImage {
+        node {
+          srcSet
+          sourceUrl
+          altText
+        }
       }
       editorBlocks(flat: false) {
         ...WPBlocks

@@ -16,15 +16,16 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 
 <BaseLayout
-    title={nodeByUri?.title ?? ''}
-    image={pageData?.featuredImage?.node ? {
-      alt: pageData?.featuredImage?.node?.altText ?? '',
-      src: pageData?.featuredImage?.node?.sourceUrl ?? '',
-    } : undefined}
-    primaryMenu={nodeByUri?.primaryMenu?.nodes?.[0] && isGraphType(nodeByUri?.primaryMenu?.nodes?.[0], 'Menu') ? nodeByUri?.primaryMenu?.nodes?.[0] : null}
-    footerMenu={nodeByUri?.footerMenu?.nodes?.[0] && isGraphType(nodeByUri?.footerMenu?.nodes?.[0], 'Menu') ? nodeByUri?.footerMenu?.nodes?.[0] : null}
-    seo={pageData?.seo}
-  >
+  title={nodeByUri?.generalSettings?.title ?? ''}
+  description={nodeByUri?.generalSettings?.description ?? ''}
+  image={pageData?.featuredImage?.node ? {
+    alt: pageData?.featuredImage?.node?.altText ?? '',
+    src: pageData?.featuredImage?.node?.sourceUrl ?? '',
+  } : undefined}
+  primaryMenu={nodeByUri?.primaryMenu?.nodes?.[0] && isGraphType(nodeByUri?.primaryMenu?.nodes?.[0], 'Menu') ? nodeByUri?.primaryMenu?.nodes?.[0] : null}
+  footerMenu={nodeByUri?.footerMenu?.nodes?.[0] && isGraphType(nodeByUri?.footerMenu?.nodes?.[0], 'Menu') ? nodeByUri?.footerMenu?.nodes?.[0] : null}
+  seo={pageData?.seo}
+>
     {pageData?.title && (
         <h1 class="text-3xl leading-tight font-serif font-medium sm:text-5xl sm:leading-tight mb-6">{pageData.title}</h1>
     )}

@@ -14,7 +14,8 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 
 <BaseLayout
-    title={allTags?.nodeByUri?.title ?? ''}
+    title={allTags?.generalSettings?.title ?? ''}
+    description={allTags?.generalSettings?.description ?? ''}
     image={allTags?.nodeByUri?.featuredImage?.node ? {
       alt: allTags?.nodeByUri?.featuredImage?.node?.altText ?? '',
       src: allTags?.nodeByUri?.featuredImage?.node?.sourceUrl ?? '',

@@ -9,6 +9,7 @@ import { getAllTags } from '@/lib/api';
 const allTags = await getAllTags();
 
 const seo = allTags?.nodeByUri?.seo;
+Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 
 <BaseLayout

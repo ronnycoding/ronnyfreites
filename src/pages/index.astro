@@ -11,6 +11,8 @@ const blocks =
   (pageData &&
     pageData.editorBlocks?.filter(isWPBlock)) ??
   [];
+
+Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 
 <BaseLayout

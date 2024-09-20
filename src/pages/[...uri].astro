@@ -34,6 +34,7 @@ if (pageData?.editorBlocks && pageData?.editorBlocks?.length > 0) {
 }
 
 const seo = nodeByUri?.nodeByUri?.seo
+Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 
 <BaseLayout

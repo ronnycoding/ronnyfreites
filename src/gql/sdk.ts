@@ -25409,10 +25409,10 @@ export type GetNodeByUriQueryVariables = Exact<{
 
 
 export type GetNodeByUriQuery = (
-  { __typename?: 'RootQuery', nodeByUri?: { __typename: 'BlockEditorPreview', isContentNode: boolean, isTermNode: boolean } | { __typename: 'Category', id: string, name?: string | null, isContentNode: boolean, isTermNode: boolean, posts?: { __typename?: 'CategoryToPostConnection', edges: Array<{ __typename?: 'CategoryToPostConnectionEdge', node: { __typename?: 'Post', date?: string | null, title?: string | null, excerpt?: string | null, uri?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null } }> } | null, seo?: (
+  { __typename?: 'RootQuery', nodeByUri?: { __typename: 'BlockEditorPreview', isContentNode: boolean, isTermNode: boolean } | { __typename: 'Category', id: string, name?: string | null, isContentNode: boolean, isTermNode: boolean, posts?: { __typename?: 'CategoryToPostConnection', edges: Array<{ __typename?: 'CategoryToPostConnectionEdge', node: { __typename?: 'Post', date?: string | null, title?: string | null, excerpt?: string | null, uri?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, caption?: string | null, title?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null } }> } | null, seo?: (
       { __typename?: 'TaxonomySEO' }
       & TaxonomySeoMetadataFragment
-    ) | null } | { __typename: 'Comment', isContentNode: boolean, isTermNode: boolean } | { __typename: 'ContentType', isContentNode: boolean, isTermNode: boolean } | { __typename: 'GraphqlDocument', isContentNode: boolean, isTermNode: boolean } | { __typename: 'GraphqlDocumentGroup', isContentNode: boolean, isTermNode: boolean } | { __typename: 'MediaItem', isContentNode: boolean, isTermNode: boolean } | { __typename: 'Page', id: string, title?: string | null, uri?: string | null, slug?: string | null, date?: string | null, isContentNode: boolean, isTermNode: boolean, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null, seo?: (
+    ) | null } | { __typename: 'Comment', isContentNode: boolean, isTermNode: boolean } | { __typename: 'ContentType', isContentNode: boolean, isTermNode: boolean } | { __typename: 'GraphqlDocument', isContentNode: boolean, isTermNode: boolean } | { __typename: 'GraphqlDocumentGroup', isContentNode: boolean, isTermNode: boolean } | { __typename: 'MediaItem', isContentNode: boolean, isTermNode: boolean } | { __typename: 'Page', id: string, title?: string | null, uri?: string | null, slug?: string | null, date?: string | null, isContentNode: boolean, isTermNode: boolean, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, caption?: string | null, title?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null, seo?: (
       { __typename?: 'PostTypeSEO' }
       & PostTypeSeoMetadataFragment
     ) | null, editorBlocks?: Array<(
@@ -25997,7 +25997,7 @@ export type GetNodeByUriQuery = (
     ) | (
       { __typename?: 'YoastSeoBreadcrumbs' }
       & WpBlocks_YoastSeoBreadcrumbs_Fragment
-    ) | null> | null } | { __typename: 'Post', id: string, title?: string | null, date?: string | null, uri?: string | null, excerpt?: string | null, slug?: string | null, isContentNode: boolean, isTermNode: boolean, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null, seo?: (
+    ) | null> | null } | { __typename: 'Post', id: string, title?: string | null, date?: string | null, uri?: string | null, excerpt?: string | null, slug?: string | null, isContentNode: boolean, isTermNode: boolean, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, caption?: string | null, title?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null, seo?: (
       { __typename?: 'PostTypeSEO' }
       & PostTypeSeoMetadataFragment
     ) | null, editorBlocks?: Array<(
@@ -26582,10 +26582,10 @@ export type GetNodeByUriQuery = (
     ) | (
       { __typename?: 'YoastSeoBreadcrumbs' }
       & WpBlocks_YoastSeoBreadcrumbs_Fragment
-    ) | null> | null } | { __typename: 'PostFormat', isContentNode: boolean, isTermNode: boolean } | { __typename: 'ReusableBlock', isContentNode: boolean, isTermNode: boolean } | { __typename: 'Tag', id: string, name?: string | null, isContentNode: boolean, isTermNode: boolean, posts?: { __typename?: 'TagToPostConnection', edges: Array<{ __typename?: 'TagToPostConnectionEdge', node: { __typename?: 'Post', date?: string | null, title?: string | null, excerpt?: string | null, uri?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null } }> } | null, seo?: (
+    ) | null> | null } | { __typename: 'PostFormat', isContentNode: boolean, isTermNode: boolean } | { __typename: 'ReusableBlock', isContentNode: boolean, isTermNode: boolean } | { __typename: 'Tag', id: string, name?: string | null, isContentNode: boolean, isTermNode: boolean, posts?: { __typename?: 'TagToPostConnection', edges: Array<{ __typename?: 'TagToPostConnectionEdge', node: { __typename?: 'Post', date?: string | null, title?: string | null, excerpt?: string | null, uri?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, caption?: string | null, title?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null } }> } | null, seo?: (
       { __typename?: 'TaxonomySEO' }
       & TaxonomySeoMetadataFragment
-    ) | null } | { __typename: 'User', isContentNode: boolean, isTermNode: boolean } | null, posts?: { __typename: 'RootQueryToPostConnection', edges: Array<{ __typename?: 'RootQueryToPostConnectionEdge', cursor?: string | null, node: { __typename: 'Post', id: string, title?: string | null, date?: string | null, uri?: string | null, excerpt?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', edges: Array<{ __typename?: 'PostToCategoryConnectionEdge', node: { __typename: 'Category', id: string, name?: string | null, slug?: string | null } }> } | null, tags?: { __typename?: 'PostToTagConnection', edges: Array<{ __typename?: 'PostToTagConnectionEdge', node: { __typename?: 'Tag', id: string, name?: string | null, slug?: string | null, uri?: string | null } }> } | null } }> } | null, tag?: { __typename?: 'Tag', id: string, name?: string | null, description?: string | null, slug?: string | null, uri?: string | null, posts?: { __typename?: 'TagToPostConnection', edges: Array<{ __typename?: 'TagToPostConnectionEdge', node: { __typename?: 'Post', date?: string | null, title?: string | null, excerpt?: string | null, uri?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null } }> } | null, seo?: (
+    ) | null } | { __typename: 'User', isContentNode: boolean, isTermNode: boolean } | null, posts?: { __typename: 'RootQueryToPostConnection', edges: Array<{ __typename?: 'RootQueryToPostConnectionEdge', cursor?: string | null, node: { __typename: 'Post', id: string, title?: string | null, date?: string | null, uri?: string | null, excerpt?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', edges: Array<{ __typename?: 'PostToCategoryConnectionEdge', node: { __typename: 'Category', id: string, name?: string | null, slug?: string | null } }> } | null, tags?: { __typename?: 'PostToTagConnection', edges: Array<{ __typename?: 'PostToTagConnectionEdge', node: { __typename?: 'Tag', id: string, name?: string | null, slug?: string | null, uri?: string | null } }> } | null } }> } | null, tag?: { __typename?: 'Tag', id: string, name?: string | null, description?: string | null, slug?: string | null, uri?: string | null, posts?: { __typename?: 'TagToPostConnection', edges: Array<{ __typename?: 'TagToPostConnectionEdge', node: { __typename?: 'Post', date?: string | null, title?: string | null, excerpt?: string | null, uri?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, caption?: string | null, title?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null } }> } | null, seo?: (
       { __typename?: 'TaxonomySEO' }
       & TaxonomySeoMetadataFragment
     ) | null } | null }
@@ -26606,7 +26606,7 @@ export type GetTagsQuery = (
   { __typename?: 'RootQuery', nodeByUri?: { __typename: 'BlockEditorPreview' } | { __typename: 'Category' } | { __typename: 'Comment' } | { __typename: 'ContentType' } | { __typename: 'GraphqlDocument' } | { __typename: 'GraphqlDocumentGroup' } | { __typename: 'MediaItem' } | { __typename: 'Page', id: string, seo?: (
       { __typename?: 'PostTypeSEO' }
       & PostTypeSeoMetadataFragment
-    ) | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null } } | null, editorBlocks?: Array<(
+    ) | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, caption?: string | null, title?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null, editorBlocks?: Array<(
       { __typename?: 'CoreArchives' }
       & WpBlocks_CoreArchives_Fragment
     ) | (
@@ -26730,7 +26730,7 @@ export type GetTagsQuery = (
       { __typename?: 'CoreLoginout' }
       & WpBlocks_CoreLoginout_Fragment
     ) | (
-      { __typename: 'CoreMediaText', clientId?: string | null, parentClientId?: string | null, attributes?: { __typename?: 'CoreMediaTextAttributes', mediaAlt: string, mediaUrl?: string | null } | null, innerBlocks?: Array<(
+      { __typename: 'CoreMediaText', clientId?: string | null, parentClientId?: string | null, innerBlocks?: Array<(
         { __typename?: 'CoreArchives' }
         & WpBlocks_CoreArchives_Fragment
       ) | (
@@ -27264,7 +27264,7 @@ type WpBlocks_CoreHomeLink_Fragment = { __typename?: 'CoreHomeLink' };
 
 type WpBlocks_CoreHtml_Fragment = { __typename?: 'CoreHtml' };
 
-type WpBlocks_CoreImage_Fragment = { __typename: 'CoreImage', clientId?: string | null, parentClientId?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null, sizes?: Array<{ __typename?: 'MediaSize', sourceUrl?: string | null, width?: string | null, height?: string | null, fileSize?: number | null, mimeType?: string | null, name?: string | null } | null> | null, meta?: { __typename?: 'MediaItemMeta', caption?: string | null, title?: string | null } | null } | null };
+type WpBlocks_CoreImage_Fragment = { __typename: 'CoreImage', clientId?: string | null, parentClientId?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null, sizes?: Array<{ __typename?: 'MediaSize', sourceUrl?: string | null, width?: string | null, height?: string | null } | null> | null } | null, attributes?: { __typename?: 'CoreImageAttributes', alt: string, aspectRatio?: string | null, caption?: string | null, title?: string | null, url?: string | null } | null };
 
 type WpBlocks_CoreLatestComments_Fragment = { __typename?: 'CoreLatestComments' };
 
@@ -27497,20 +27497,20 @@ export const WpBlocksFragmentDoc = gql`
     parentClientId
     __typename
     mediaDetails {
+      height
+      width
       sizes {
         sourceUrl
         width
         height
-        fileSize
-        mimeType
-        name
       }
-      meta {
-        caption
-        title
-      }
-      height
-      width
+    }
+    attributes {
+      alt
+      aspectRatio
+      caption
+      title
+      url
     }
   }
   ... on CoreQuote {
@@ -27617,6 +27617,8 @@ export const GetNodeByUriDocument = gql`
           srcSet
           sourceUrl
           altText
+          caption
+          title
           mediaDetails {
             height
             width
@@ -27653,6 +27655,8 @@ export const GetNodeByUriDocument = gql`
           srcSet
           sourceUrl
           altText
+          caption
+          title
           mediaDetails {
             height
             width
@@ -27698,13 +27702,15 @@ export const GetNodeByUriDocument = gql`
               }
               featuredImage {
                 node {
-                  srcSet
-                  sourceUrl
-                  altText
                   mediaDetails {
                     height
                     width
                   }
+                  srcSet
+                  sourceUrl
+                  altText
+                  caption
+                  title
                 }
               }
             }
@@ -27738,6 +27744,8 @@ export const GetNodeByUriDocument = gql`
                   srcSet
                   sourceUrl
                   altText
+                  caption
+                  title
                   mediaDetails {
                     height
                     width
@@ -27825,6 +27833,8 @@ export const GetNodeByUriDocument = gql`
                   srcSet
                   sourceUrl
                   altText
+                  caption
+                  title
                   mediaDetails {
                     height
                     width
@@ -27891,6 +27901,12 @@ export const GetTagsDocument = gql`
           srcSet
           sourceUrl
           altText
+          caption
+          title
+          mediaDetails {
+            height
+            width
+          }
         }
       }
       editorBlocks(flat: false) {
@@ -27899,10 +27915,6 @@ export const GetTagsDocument = gql`
           __typename
           clientId
           parentClientId
-          attributes {
-            mediaAlt
-            mediaUrl
-          }
           innerBlocks {
             ...WPBlocks
           }

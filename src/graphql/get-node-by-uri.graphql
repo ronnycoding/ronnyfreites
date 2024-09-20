@@ -21,6 +21,8 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                     srcSet
                     sourceUrl
                     altText
+                    caption
+                    title
                     mediaDetails {
                         height
                         width
@@ -57,6 +59,8 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                     srcSet
                     sourceUrl
                     altText
+                    caption
+                    title
                     mediaDetails {
                         height
                         width
@@ -102,13 +106,15 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                             }
                             featuredImage {
                                 node {
-                                    srcSet
-                                    sourceUrl
-                                    altText
                                     mediaDetails {
                                         height
                                         width
                                     }
+                                    srcSet
+                                    sourceUrl
+                                    altText
+                                    caption
+                                    title
                                 }
                             }
                         }
@@ -142,6 +148,8 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                                     srcSet
                                     sourceUrl
                                     altText
+                                    caption
+                                    title
                                     mediaDetails {
                                         height
                                         width
@@ -225,6 +233,8 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                                     srcSet
                                     sourceUrl
                                     altText
+                                    caption
+                                    title
                                     mediaDetails {
                                         height
                                         width

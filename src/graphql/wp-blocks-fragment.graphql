@@ -40,20 +40,20 @@ fragment WPBlocks on EditorBlock {
         parentClientId
         __typename
         mediaDetails {
+            height
+            width
             sizes {
                 sourceUrl
                 width
                 height
-                fileSize
-                mimeType
-                name
             }
-            meta {
-                caption
-                title
-            }
-            height
-            width
+        }
+        attributes {
+            alt
+            aspectRatio
+            caption
+            title
+            url
         }
     }
     ... on CoreQuote {

@@ -29,10 +29,6 @@ function transformImageData(data) {
   const image = {
     src: largestImage.sourceUrl,
     srcset: srcset,
-    alt: data.mediaDetails.meta.title || '',
-    caption: data.mediaDetails.meta.caption || '',
-    height: largestImage.height,
-    width: largestImage.width
   };
 
   return image;
@@ -50,11 +46,11 @@ function transformImageData(data) {
           srcset={transformedImage.srcset}
           loading="lazy"
           decoding="async"
-          height={transformedImage.height}
-          width={transformedImage.width}
-          alt={transformedImage.alt}
+          height={block.mediaDetails.height}
+          width={block.mediaDetails.width}
+          alt={block.attributes.alt}
         />
-        {transformedImage.caption && <figcaption class="mt-1.5 text-xs sm:text-sm">{transformedImage.caption}</figcaption>}
+        {block.attributes.caption && <figcaption class="mt-1.5 text-xs sm:text-sm">{block.attributes.caption}</figcaption>}
       </figure>
     )
   }

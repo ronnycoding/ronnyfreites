@@ -11,6 +11,12 @@ query GetTags($cursor: String) {
                     srcSet
                     sourceUrl
                     altText
+                    caption
+                    title
+                    mediaDetails {
+                        height
+                        width
+                    }
                 }
             }
             editorBlocks(flat: false) {
@@ -19,10 +25,6 @@ query GetTags($cursor: String) {
                     __typename
                     clientId
                     parentClientId
-                    attributes {
-                        mediaAlt
-                        mediaUrl
-                    }
                     innerBlocks {
                         ...WPBlocks
                     }

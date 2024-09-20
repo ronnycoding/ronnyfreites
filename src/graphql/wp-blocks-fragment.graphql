@@ -52,6 +52,8 @@ fragment WPBlocks on EditorBlock {
                 caption
                 title
             }
+            height
+            width
         }
     }
     ... on CoreQuote {

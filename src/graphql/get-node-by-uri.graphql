@@ -21,6 +21,10 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                     srcSet
                     sourceUrl
                     altText
+                    mediaDetails {
+                        height
+                        width
+                    }
                 }
             }
             seo {
@@ -101,6 +105,10 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                                     srcSet
                                     sourceUrl
                                     altText
+                                    mediaDetails {
+                                        height
+                                        width
+                                    }
                                 }
                             }
                         }
@@ -134,6 +142,10 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                                     srcSet
                                     sourceUrl
                                     altText
+                                    mediaDetails {
+                                        height
+                                        width
+                                    }
                                 }
                             }
                         }
@@ -213,6 +225,10 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                                     srcSet
                                     sourceUrl
                                     altText
+                                    mediaDetails {
+                                        height
+                                        width
+                                    }
                                 }
                             }
                         }

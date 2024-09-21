@@ -13,8 +13,22 @@ const password = import.meta.env.SUBSCRIBER_USER_PASSWORD;
 const client = new GraphQLClient(graphqlEndpoint);
 const sdk = getSdk(client);
 
-export const getNodeByUri = async (uri: string) => {
-    return sdk.GetNodeByURI({ uri, idUri: uri });
+export const getNodeByUri = async ({
+    uri,
+    categoryName,
+    first,
+    after,
+    last,
+    before
+}: {
+    uri: string;
+    categoryName: string;
+    first: number | null;
+    after: string | null;
+    last: number | null;
+    before: string | null;
+}) => {
+    return sdk.GetNodeByURI({ uri, idUri: uri, categoryName, first, after, last, before });
 };
 
 export const getAllTags = async (cursor?: string) => {

@@ -1,4 +1,4 @@
-query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
+query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: Int, $last: Int, $after: String, $before: String) {
     nodeByUri(uri: $uri) {
         __typename
         isContentNode
@@ -47,6 +47,20 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                     }
                 }
             }
+            tags(where: { orderby: COUNT, hideEmpty: true }, first: 100) {
+                __typename
+                edges {
+                    node {
+                        ... on Tag {
+                            __typename
+                            id
+                            name
+                            slug
+                            uri
+                        }
+                    }
+                }
+            }
         }
         ... on Page {
             id
@@ -89,8 +103,9 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
         ... on Category {
             id
             name
-            posts {
+            posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }] }, first: $first, after: $after, last: $last, before: $before) {
                 edges {
+                    cursor
                     node {
                         ... on Post {
                             date
@@ -119,6 +134,13 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                             }
                         }
                     }
+                }
+                pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                    startCursor
+                    endCursor
+                    total
                 }
             }
             seo {
@@ -128,8 +150,15 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
         ... on Tag {
             id
             name
-            posts {
+            posts(
+                where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }], categoryName: $categoryName }
+                first: $first
+                last: $last
+                after: $after
+                before: $before
+            ) {
                 edges {
+                    cursor
                     node {
                         ... on Post {
                             date
@@ -159,15 +188,29 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                         }
                     }
                 }
+                pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                    startCursor
+                    endCursor
+                    total
+                }
             }
             seo {
                 ...TaxonomySEOMetadata
             }
         }
     }
-    posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }], categoryName: $uri }, first: 10, after: $cursor) {
+    posts(
+        where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }], categoryName: $categoryName }
+        first: $first
+        last: $last
+        after: $after
+        before: $before
+    ) {
         __typename
         edges {
+            cursor
             node {
                 __typename
                 ... on Post {
@@ -203,7 +246,13 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                     }
                 }
             }
-            cursor
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+            total
         }
     }
     tag(id: $idUri, idType: URI) {
@@ -213,8 +262,9 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
             description
             slug
             uri
-            posts {
+            posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }] }, first: $first, last: $last, after: $after, before: $before) {
                 edges {
+                    cursor
                     node {
                         ... on Post {
                             date
@@ -243,6 +293,13 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $cursor: String) {
                             }
                         }
                     }
+                }
+                pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                    startCursor
+                    endCursor
+                    total
                 }
             }
             seo {

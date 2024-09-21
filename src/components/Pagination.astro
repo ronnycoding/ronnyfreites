@@ -3,31 +3,49 @@ import ArrowLeft from '../icons/ArrowLeft.astro';
 import ArrowRight from '../icons/ArrowRight.astro';
 import IconButton from './IconButton.astro';
 
-const { page, class: className } = Astro.props;
+const { hasNextPage, hasPreviousPage, startCursor, endCursor, currentAfter, currentBefore, class: className } = Astro.props;
+
+const currentPath = new URL(Astro.request.url).pathname;
+
+const getPaginationUrl = (direction: 'next' | 'previous') => {
+  const url = new URL(currentPath, Astro.site);
+  if (direction === 'next') {
+    url.searchParams.set('after', endCursor);
+    url.searchParams.delete('before');
+  } else {
+    if (currentAfter) {
+      // If we're currently on a page after the first page, go back to the previous page
+      url.searchParams.set('before', currentAfter);
+      url.searchParams.delete('after');
+    } else if (currentBefore) {
+      // If we're already paginating backwards, continue backwards
+      url.searchParams.set('before', startCursor);
+    } else {
+      // If we're on the first page, start paginating backwards
+      url.searchParams.set('before', endCursor);
+    }
+  }
+  return url.toString();
+};
+
 ---
 
-<nav aria-label="Pagination" class:list={['px-12 py-2 relative text-center', className]}>
-    {
-        page.url.prev && (
-            <IconButton
-                class="absolute left-0 top-1/2 -translate-y-1/2"
-                href={page.url.prev}
-                aria-label={`Go to page ${page.currentPage - 1} of ${page.lastPage}`}
-            >
-                <ArrowLeft class="w-5 h-5 fill-current" />
-            </IconButton>
-        )
-    }
-    <span class="text-sm" aria-current="page">Page {page.currentPage} of {page.lastPage}</span>
-    {
-        page.url.next && (
-            <IconButton
-                class="absolute right-0 top-1/2 -translate-y-1/2"
-                href={page.url.next}
-                aria-label={`Go to page ${page.currentPage + 1} of ${page.lastPage}`}
-            >
-                <ArrowRight class="w-5 h-5 fill-current" />
-            </IconButton>
-        )
-    }
+<nav aria-label="Pagination" class:list={['flex justify-between items-center px-12 py-2', className]}>
+    {hasPreviousPage && (
+        <IconButton
+            href={getPaginationUrl('previous')}
+            aria-label="Go to previous page"
+        >
+            <ArrowLeft class="w-5 h-5 fill-current" /> Previous
+        </IconButton>
+    )}
+    {!hasPreviousPage && <div></div>}
+    {hasNextPage && (
+        <IconButton
+            href={getPaginationUrl('next')}
+            aria-label="Go to next page"
+        >
+            Next <ArrowRight class="w-5 h-5 fill-current" />
+        </IconButton>
+    )}
 </nav>

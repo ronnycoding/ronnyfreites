@@ -32,7 +32,7 @@ query GetTags($cursor: String) {
             }
         }
     }
-    tags(where: { orderby: NAME, hideEmpty: true }, first: 10, after: $cursor) {
+    tags(where: { orderby: COUNT, hideEmpty: true }, first: 10, after: $cursor) {
         __typename
         edges {
             node {

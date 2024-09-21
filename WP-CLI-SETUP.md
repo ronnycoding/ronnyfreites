@@ -70,6 +70,9 @@ docker exec wpcli wp plugin install jwt-authentication-for-wp-rest-api --activat
 
 # Add CORS support
 docker exec wpcli wp plugin install wp-cors --activate
+
+# Total Counts for WPGraphQL (Nice to paginate queries)
+docker exec wpcli wp plugin install git@github.com:builtbycactus/total-counts-for-wp-graphql.git --activate
 ```
 
 ## Custom ACF Block Registration

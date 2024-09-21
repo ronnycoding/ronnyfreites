@@ -253,9 +253,8 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: In
             description
             slug
             uri
-            posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }] }, first: $first, last: $last, after: $after, before: $before) {
+            posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }] }, first: 200) {
                 edges {
-                    cursor
                     node {
                         ... on Post {
                             date
@@ -284,12 +283,6 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: In
                             }
                         }
                     }
-                }
-                pageInfo {
-                    hasNextPage
-                    hasPreviousPage
-                    startCursor
-                    endCursor
                 }
             }
             seo {

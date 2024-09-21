@@ -26686,7 +26686,7 @@ export type GetNodeByUriQuery = (
     ) | null> | null, tags?: { __typename: 'PostToTagConnection', edges: Array<{ __typename?: 'PostToTagConnectionEdge', node: { __typename: 'Tag', id: string, name?: string | null, slug?: string | null, uri?: string | null } }> } | null } | { __typename: 'PostFormat', isContentNode: boolean, isTermNode: boolean } | { __typename: 'ReusableBlock', isContentNode: boolean, isTermNode: boolean } | { __typename: 'Tag', id: string, name?: string | null, isContentNode: boolean, isTermNode: boolean, posts?: { __typename?: 'TagToPostConnection', edges: Array<{ __typename?: 'TagToPostConnectionEdge', cursor?: string | null, node: { __typename?: 'Post', date?: string | null, title?: string | null, excerpt?: string | null, uri?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, caption?: string | null, title?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null } }>, pageInfo: { __typename?: 'TagToPostConnectionPageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } | null, seo?: (
       { __typename?: 'TaxonomySEO' }
       & TaxonomySeoMetadataFragment
-    ) | null } | { __typename: 'User', isContentNode: boolean, isTermNode: boolean } | null, posts?: { __typename: 'RootQueryToPostConnection', edges: Array<{ __typename?: 'RootQueryToPostConnectionEdge', cursor?: string | null, node: { __typename: 'Post', id: string, title?: string | null, date?: string | null, uri?: string | null, excerpt?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', edges: Array<{ __typename?: 'PostToCategoryConnectionEdge', node: { __typename: 'Category', id: string, name?: string | null, slug?: string | null } }> } | null, tags?: { __typename?: 'PostToTagConnection', edges: Array<{ __typename?: 'PostToTagConnectionEdge', node: { __typename?: 'Tag', id: string, name?: string | null, slug?: string | null, uri?: string | null } }> } | null } }>, pageInfo: { __typename?: 'RootQueryToPostConnectionPageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } | null, tag?: { __typename?: 'Tag', id: string, name?: string | null, description?: string | null, slug?: string | null, uri?: string | null, posts?: { __typename?: 'TagToPostConnection', edges: Array<{ __typename?: 'TagToPostConnectionEdge', cursor?: string | null, node: { __typename?: 'Post', date?: string | null, title?: string | null, excerpt?: string | null, uri?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, caption?: string | null, title?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null } }>, pageInfo: { __typename?: 'TagToPostConnectionPageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } | null, seo?: (
+    ) | null } | { __typename: 'User', isContentNode: boolean, isTermNode: boolean } | null, posts?: { __typename: 'RootQueryToPostConnection', edges: Array<{ __typename?: 'RootQueryToPostConnectionEdge', cursor?: string | null, node: { __typename: 'Post', id: string, title?: string | null, date?: string | null, uri?: string | null, excerpt?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', edges: Array<{ __typename?: 'PostToCategoryConnectionEdge', node: { __typename: 'Category', id: string, name?: string | null, slug?: string | null } }> } | null, tags?: { __typename?: 'PostToTagConnection', edges: Array<{ __typename?: 'PostToTagConnectionEdge', node: { __typename?: 'Tag', id: string, name?: string | null, slug?: string | null, uri?: string | null } }> } | null } }>, pageInfo: { __typename?: 'RootQueryToPostConnectionPageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } | null, tag?: { __typename?: 'Tag', id: string, name?: string | null, description?: string | null, slug?: string | null, uri?: string | null, posts?: { __typename?: 'TagToPostConnection', edges: Array<{ __typename?: 'TagToPostConnectionEdge', node: { __typename?: 'Post', date?: string | null, title?: string | null, excerpt?: string | null, uri?: string | null, slug?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', name?: string | null, uri?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', srcSet?: string | null, sourceUrl?: string | null, altText?: string | null, caption?: string | null, title?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null } }> } | null, seo?: (
       { __typename?: 'TaxonomySEO' }
       & TaxonomySeoMetadataFragment
     ) | null } | null }
@@ -27962,13 +27962,9 @@ export const GetNodeByUriDocument = gql`
       uri
       posts(
         where: {status: PUBLISH, orderby: [{field: DATE, order: DESC}]}
-        first: $first
-        last: $last
-        after: $after
-        before: $before
+        first: 200
       ) {
         edges {
-          cursor
           node {
             ... on Post {
               date
@@ -27997,12 +27993,6 @@ export const GetNodeByUriDocument = gql`
               }
             }
           }
-        }
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
         }
       }
       seo {

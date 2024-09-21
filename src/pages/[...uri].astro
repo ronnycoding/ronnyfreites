@@ -59,6 +59,9 @@ const pageInfo = [
 
 const { hasNextPage, hasPreviousPage, startCursor, endCursor } = pageInfo ?? {};
 
+console.log(nodeByUri?.tag?.posts?.edges)
+console.log(posts)
+
 Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
 ---
 

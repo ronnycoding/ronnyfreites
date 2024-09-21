@@ -21,16 +21,9 @@ export default defineConfig({
             enabled: true
         },
         isr: {
-            // caches all pages on first request and saves for 1 day
-            expiration: 60 * 60 * 24,
-            exclude: [
-                '^/$', // Excludes root page
-                '^/threads$', // Excludes main /threads page
-                '^/threads/(?:\\?|$)', // Excludes /threads/ with or without query parameters
-                '^/blog$', // Excludes main /blog page
-                '^/blog/(?:\\?|$)', // Excludes /blog/ with or without query parameters
-                '^/tag' // Excludes /tag and all its subpaths
-            ]
+            // caches all pages on first request and saves for 30 days
+            expiration: 60 * 60 * 24 * 30,
+            exclude: ['/tag', '/tag/[...slug]', '/thread', '/blog']
         }
     })
 });

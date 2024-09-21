@@ -11,13 +11,13 @@
         "codegen": "graphql-codegen --config codegen.ts"
     },
     "dependencies": {
-        "@astrojs/mdx": "^3.1.6",
         "@astrojs/rss": "^4.0.7",
         "@astrojs/sitemap": "^3.1.6",
         "@astrojs/tailwind": "^5.1.1",
         "@astrojs/vercel": "^7.8.1",
         "astro": "^4.15.8",
         "graphql-tag": "^2.12.6",
+        "highlight.js": "^11.10.0",
         "marked": "^13.0.2",
         "tailwindcss": "^3.4.6"
     },

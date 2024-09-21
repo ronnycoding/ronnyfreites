@@ -5,6 +5,11 @@ import type { WPBlock } from "@/utils/types"
 import List from "@/components/List.astro"
 import Heading from "@/components/Heading.astro"
 import Button from '@/components/Button.astro';
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+hljs.registerLanguage('javascript', javascript);
+import 'highlight.js/styles/github-dark.css';
+
 
 export type Props = {
   blocks: WPBlock[]
@@ -36,13 +41,21 @@ function transformImageData(data) {
 
   return image;
 }
+
+function unescapeHTML(str: string): string {
+  return str.replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&#039;/g, "'");
+}
 ---
-<div class="max-w-none prose prose-dante sm:prose-lg my-4">
 <!-- image -->
 {blocks.map(block => {
   if (isGraphType(block, 'CoreImage')) {
     const transformedImage = transformImageData(block);
     return (
+    <div class="max-w-none prose prose-dante sm:prose-lg my-4">
       <figure key={block.clientId}>
         <Image
           src={transformedImage?.src}
@@ -55,22 +68,45 @@ function transformImageData(data) {
         />
         {block.attributes.caption && <figcaption class="mt-1.5 text-xs sm:text-sm">{block.attributes.caption}</figcaption>}
       </figure>
+      </div>
     )
   }
   if (isGraphType(block, 'CoreParagraph')) {
-    return <p set:html={block.attributes.content}></p>
+    return (<div class="max-w-none prose prose-dante sm:prose-lg my-4">
+    <p set:html={block.attributes.content}></p>
+    </div>)
   }
   if (isGraphType(block, 'CoreList')) {
-    return <List key={block.clientId} block={block} />
+    return (
+    <div class="max-w-none prose prose-dante sm:prose-lg my-4">
+    <List key={block.clientId} block={block} />
+    </div>
+    )
   }
   if (isGraphType(block, 'CoreHeading')) {
-    return <Heading  key={block.clientId} block={block} />
+    return (
+    <div class="max-w-none prose prose-dante sm:prose-lg my-4">
+    <Heading  key={block.clientId} block={block} />
+    </div>)
   }
   if (isGraphType(block, 'CoreButtons')) {
-    return <Button key={block.clientId} block={block} />
+    return (
+      <div class="max-w-none prose prose-dante sm:prose-lg my-4">
+        <Button key={block.clientId} block={block} />
+      </div>
+    )
+  }
+  if (isGraphType(block, "CoreCode")) {
+    return  (
+      <pre class="pre p-y-0">
+        <code class="hljs"
+        set:html={
+          unescapeHTML(hljs.highlightAuto(block.attributes?.content).value)
+        } />
+      </pre>
+    )
   }
   if (block) {
-    return <pre>{JSON.stringify(block, null, 2)}</pre>
+    console.log('Block not supported:', block)
   }
 })}
-</div>

@@ -140,7 +140,6 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: In
                     hasPreviousPage
                     startCursor
                     endCursor
-                    total
                 }
             }
             seo {
@@ -187,7 +186,6 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: In
                     hasPreviousPage
                     startCursor
                     endCursor
-                    total
                 }
             }
             seo {
@@ -246,7 +244,6 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: In
             hasPreviousPage
             startCursor
             endCursor
-            total
         }
     }
     tag(id: $idUri, idType: URI) {
@@ -293,7 +290,6 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: In
                     hasPreviousPage
                     startCursor
                     endCursor
-                    total
                 }
             }
             seo {

@@ -74,6 +74,12 @@ const PUBLIC_GTM_ID = import.meta.env.PUBLIC_GTM_ID;
           gtag('config', PUBLIC_GTM_ID);
         </script>
 
+        <script>
+          partytown = {
+            forward: ['dataLayer.push']
+          };
+        </script>
+
         <ViewTransitions />
     </head>
     <body class="bg-main text-main">

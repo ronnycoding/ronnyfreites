@@ -23,7 +23,7 @@ export default defineConfig({
         isr: {
             // caches all pages on first request and saves for 30 days
             expiration: 60 * 60 * 24 * 30,
-            exclude: ['/tag', '/tag/[...slug]', '/thread', '/blog']
+            exclude: ['/tag', '/tag/', '/tag/[...slug]', '/tag/[...slug]/', '/thread', '/thread/', '/blog', '/blog/']
         }
     })
 });

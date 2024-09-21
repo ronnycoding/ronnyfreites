@@ -30,6 +30,8 @@ function transformImageData(data) {
   const image = {
     src: largestImage.sourceUrl,
     srcset: srcset,
+    width: largestImage.width,
+    height: largestImage.height
   };
 
   return image;
@@ -47,8 +49,8 @@ function transformImageData(data) {
           srcset={transformedImage?.srcset}
           loading="lazy"
           decoding="async"
-          height={block.mediaDetails?.height}
-          width={block.mediaDetails?.width}
+          height={transformedImage?.height}
+          width={transformedImage?.width}
           alt={block.attributes?.alt}
         />
         {block.attributes.caption && <figcaption class="mt-1.5 text-xs sm:text-sm">{block.attributes.caption}</figcaption>}

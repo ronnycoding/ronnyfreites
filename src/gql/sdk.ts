@@ -26698,12 +26698,7 @@ export type GetRssPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetRssPostsQuery = { __typename?: 'RootQuery', posts?: { __typename: 'RootQueryToPostConnection', edges: Array<{ __typename?: 'RootQueryToPostConnectionEdge', node: { __typename: 'Post', id: string, slug?: string | null, uri?: string | null, title?: string | null, content?: string | null, excerpt?: string | null, date?: string | null, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: { __typename?: 'User', name?: string | null } } | null } }> } | null, generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, url?: string | null, description?: string | null } | null };
 
-export type GetTagsQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-}>;
+export type GetTagsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetTagsQuery = (
@@ -27292,7 +27287,7 @@ export type GetTagsQuery = (
     ) | (
       { __typename?: 'YoastSeoBreadcrumbs' }
       & WpBlocks_YoastSeoBreadcrumbs_Fragment
-    ) | null> | null } | { __typename: 'Post' } | { __typename: 'PostFormat' } | { __typename: 'ReusableBlock' } | { __typename: 'Tag' } | { __typename: 'User' } | null, tags?: { __typename: 'RootQueryToTagConnection', pageInfo: { __typename?: 'RootQueryToTagConnectionPageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'RootQueryToTagConnectionEdge', cursor?: string | null, node: { __typename: 'Tag', id: string, name?: string | null, description?: string | null, slug?: string | null, uri?: string | null, count?: number | null } }> } | null }
+    ) | null> | null } | { __typename: 'Post' } | { __typename: 'PostFormat' } | { __typename: 'ReusableBlock' } | { __typename: 'Tag' } | { __typename: 'User' } | null, tags?: { __typename: 'RootQueryToTagConnection', edges: Array<{ __typename?: 'RootQueryToTagConnectionEdge', node: { __typename: 'Tag', id: string, name?: string | null, description?: string | null, slug?: string | null, uri?: string | null, count?: number | null } }> } | null }
   & GeneralSettingsFragment
 );
 
@@ -28057,7 +28052,7 @@ export const GetRssPostsDocument = gql`
 }
     `;
 export const GetTagsDocument = gql`
-    query GetTags($first: Int, $last: Int, $after: String, $before: String) {
+    query GetTags {
   nodeByUri(uri: "tag") {
     __typename
     ... on Page {
@@ -28091,22 +28086,9 @@ export const GetTagsDocument = gql`
       }
     }
   }
-  tags(
-    where: {orderby: COUNT, hideEmpty: true}
-    first: $first
-    last: $last
-    after: $after
-    before: $before
-  ) {
+  tags(where: {orderby: COUNT, hideEmpty: true}, first: 200) {
     __typename
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
     edges {
-      cursor
       node {
         ... on Tag {
           __typename

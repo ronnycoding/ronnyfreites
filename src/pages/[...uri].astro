@@ -73,7 +73,7 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
   seo={seo}
 >
     {title && (
-        <header class="mb-8">
+        <header class="mb-4">
             <h1 class="text-3xl leading-tight font-serif font-medium sm:text-5xl sm:leading-tight">{title}</h1>
         </header>
     )}
@@ -92,7 +92,7 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
       </div>
     )}
     {posts?.length > 0 && (
-      <>
+      <div class="mt-14">
         {posts?.map(edge => (
           <PostPreview post={edge.node} class="mb-10 sm:mb-12" />
         ))}
@@ -104,7 +104,7 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
           currentAfter={after}
           currentBefore={before}
         />
-      </>
+      </div>
     )}
     {posts?.length === 0 && (before || after) && (
       <p>No posts found on this page. <a href={`${Astro.url.pathname}`}>Return to first page</a></p>

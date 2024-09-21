@@ -83,7 +83,7 @@ const { blocks } = Astro.props as Props
   if (isGraphType(block, 'CoreHeading')) {
     return (
     <div class="max-w-none prose prose-dante sm:prose-lg my-4">
-    <Heading  key={block.clientId} block={block} />
+      <Heading  key={block.clientId} block={block} />
     </div>)
   }
   if (isGraphType(block, 'CoreButtons')) {

@@ -6,7 +6,7 @@ import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
-    site: process.env.VERCEL_ENV === 'production' ? 'https://ronnyfreites.com' : 'http://localhost:3000',
+    site: process.env.VERCEL_ENV === 'production' ? 'https://ronnyfreites.com' : 'http://localhost:4321',
 
     integrations: [
         sitemap(),
@@ -22,7 +22,8 @@ export default defineConfig({
         },
         isr: {
             // caches all pages on first request and saves for 1 day
-            expiration: 60 * 60 * 24
+            expiration: 60 * 60 * 24,
+            exclude: ['/threads', '/blog', '/tag']
         },
         skewProtection: true
     })

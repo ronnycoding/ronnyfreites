@@ -19,11 +19,6 @@ export default defineConfig({
     adapter: vercel({
         webAnalytics: {
             enabled: true
-        },
-        isr: {
-            // caches all pages on first request and saves for 30 days
-            expiration: 60 * 60 * 24 * 30,
-            exclude: ['/tag', '/tag/', '/tag/[...slug]', '/tag/[...slug]/', '/thread', '/thread/', '/blog', '/blog/']
         }
     })
 });

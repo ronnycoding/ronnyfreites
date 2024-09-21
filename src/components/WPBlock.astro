@@ -5,6 +5,7 @@ import type { WPBlock } from "@/utils/types"
 import List from "@/components/List.astro"
 import Heading from "@/components/Heading.astro"
 import Button from '@/components/Button.astro';
+import { unescapeHTML, transformImageData } from '@/lib/utils';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import bash from 'highlight.js/lib/languages/bash';
@@ -45,39 +46,6 @@ export type Props = {
 }
 
 const { blocks } = Astro.props as Props
-
-function transformImageData(data) {
-  // Sort sizes from largest to smallest
-  const sortedSizes = data.mediaDetails.sizes.sort((a, b) =>
-    (b.width * b.height) - (a.width * a.height)
-  );
-
-  // Get the largest image for the src attribute
-  const largestImage = sortedSizes[0];
-
-  // Create the srcset string
-  const srcset = sortedSizes
-    .map(size => `${size.sourceUrl} ${size.width}w`)
-    .join(', ');
-
-  // Create the image object expected by the HTML structure
-  const image = {
-    src: largestImage.sourceUrl,
-    srcset: srcset,
-    width: largestImage.width,
-    height: largestImage.height
-  };
-
-  return image;
-}
-
-function unescapeHTML(str: string): string {
-  return str.replace(/&lt;/g, '<')
-            .replace(/&gt;/g, '>')
-            .replace(/&amp;/g, '&')
-            .replace(/&quot;/g, '"')
-            .replace(/&#039;/g, "'");
-}
 ---
 <!-- image -->
 {blocks.map(block => {

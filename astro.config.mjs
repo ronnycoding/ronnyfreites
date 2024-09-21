@@ -6,8 +6,8 @@ import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
-    // site: 'https://ronnyfreites.com',
-    site: 'http://localhost:4321',
+    site: 'https://ronnyfreites.com',
+    // site: 'http://localhost:4321',
 
     integrations: [
         sitemap(),

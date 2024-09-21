@@ -42,14 +42,14 @@ function transformImageData(data) {
     const transformedImage = transformImageData(block);
     return (
       <figure key={block.clientId}>
-        <img
-          src={transformedImage.src}
-          srcset={transformedImage.srcset}
+        <Image
+          src={transformedImage?.src}
+          srcset={transformedImage?.srcset}
           loading="lazy"
           decoding="async"
-          height={block.mediaDetails.height}
-          width={block.mediaDetails.width}
-          alt={block.attributes.alt}
+          height={block.mediaDetails?.height}
+          width={block.mediaDetails?.width}
+          alt={block.attributes?.alt}
         />
         {block.attributes.caption && <figcaption class="mt-1.5 text-xs sm:text-sm">{block.attributes.caption}</figcaption>}
       </figure>

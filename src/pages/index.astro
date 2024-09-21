@@ -12,8 +12,6 @@ const nodeByUri = await getNodeByUri({
 });
 const pageData = nodeByUri?.nodeByUri && isGraphType(nodeByUri.nodeByUri, "Page") ? nodeByUri.nodeByUri : null;
 
-console.log(nodeByUri?.posts)
-
 const blocks =
   (pageData &&
     pageData.editorBlocks?.filter(isWPBlock)) ??

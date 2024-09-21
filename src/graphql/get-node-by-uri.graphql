@@ -1,4 +1,4 @@
-query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: Int, $last: Int, $after: String, $before: String) {
+query GetNodeByURI($uri: String!, $categoryName: String, $first: Int, $last: Int, $after: String, $before: String) {
     nodeByUri(uri: $uri) {
         __typename
         isContentNode
@@ -149,7 +149,7 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: In
         ... on Tag {
             id
             name
-            posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }] }, first: $first, last: $last, after: $after, before: $before) {
+            posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }] }, first: 200) {
                 edges {
                     cursor
                     node {
@@ -244,50 +244,6 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: In
             hasPreviousPage
             startCursor
             endCursor
-        }
-    }
-    tag(id: $idUri, idType: URI) {
-        ... on Tag {
-            id
-            name
-            description
-            slug
-            uri
-            posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }] }, first: 200) {
-                edges {
-                    node {
-                        ... on Post {
-                            date
-                            title
-                            excerpt
-                            uri
-                            slug
-                            categories {
-                                nodes {
-                                    name
-                                    uri
-                                }
-                            }
-                            featuredImage {
-                                node {
-                                    srcSet
-                                    sourceUrl
-                                    altText
-                                    caption
-                                    title
-                                    mediaDetails {
-                                        height
-                                        width
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            seo {
-                ...TaxonomySEOMetadata
-            }
         }
     }
     ...GeneralSettings

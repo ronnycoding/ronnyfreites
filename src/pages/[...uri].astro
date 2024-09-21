@@ -32,7 +32,6 @@ const posts = [
   nodeByUri?.posts?.edges,
   categoryData?.posts?.edges,
   tagData?.posts?.edges,
-  nodeByUri?.tag?.posts?.edges
 ].find(arr => Array.isArray(arr) && arr.length > 0) || [];
 
 const blocks = (pageData?.editorBlocks ?? postData?.editorBlocks ?? []).filter(isWPBlock);
@@ -53,8 +52,7 @@ const isNonEmptyObject = (obj: any): boolean => {
 const pageInfo = [
   nodeByUri?.posts?.pageInfo,
   categoryData?.posts?.pageInfo,
-  tagData?.posts?.pageInfo,
-  nodeByUri?.tag?.posts?.pageInfo
+  tagData?.posts?.pageInfo
 ].find(isNonEmptyObject) || {};
 
 const { hasNextPage, hasPreviousPage, startCursor, endCursor } = pageInfo ?? {};

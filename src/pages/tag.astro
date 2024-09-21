@@ -1,16 +1,47 @@
 ---
 import ArrowRight from '@/icons/ArrowRight.astro';
+import ArrowLeft from '@/icons/ArrowLeft.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-// import Subscribe from '@/components/Subscribe.astro';
 import { isGraphType, isWPBlock } from '@/utils/types'
 import WPBlock from '@/components/WPBlock.astro';
-
 import { getAllTags } from '@/lib/api';
 
-const allTags = await getAllTags();
+const TAGS_PER_PAGE = 10;
+
+const after = Astro.url.searchParams.get('after') || null;
+const before = Astro.url.searchParams.get('before') || null;
+
+const allTags = await getAllTags({
+    first: before ? null : TAGS_PER_PAGE,
+    last: before ? TAGS_PER_PAGE : null,
+    after,
+    before
+});
+
 const seo = allTags?.nodeByUri?.seo;
-const blocks = allTags?.nodeByUri?.editorBlocks ?? []
+const blocks = allTags?.nodeByUri?.editorBlocks ?? [];
+const tags = allTags?.tags?.edges ?? [];
+const pageInfo = allTags?.tags?.pageInfo;
+
 Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
+
+const getPaginationUrl = (direction: 'next' | 'previous') => {
+    const url = new URL(Astro.url);
+    if (direction === 'next') {
+        url.searchParams.set('after', pageInfo?.endCursor || '');
+        url.searchParams.delete('before');
+    } else {
+        if (after) {
+            url.searchParams.set('before', after);
+            url.searchParams.delete('after');
+        } else if (before) {
+            url.searchParams.set('before', pageInfo?.startCursor || '');
+        } else {
+            url.searchParams.set('before', pageInfo?.startCursor || '');
+        }
+    }
+    return url.toString();
+};
 ---
 
 <BaseLayout
@@ -28,22 +59,57 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
     <h1 class="mb-12 text-2xl font-serif italic sm:mb-16 sm:text-4xl">All Tags</h1>
     <WPBlock blocks={blocks} />
     {
-        allTags.tags?.edges?.map((tag) =>
-            (
-                <a class="mb-10 flex justify-between items-start gap-8 group sm:mb-12" href={tag?.node?.uri}>
-                    <div class="grow">
-                        <h2 class="text-xl leading-tight font-serif font-medium group-hover:underline group-hover:decoration-dashed group-hover:underline-offset-4 group-hover:decoration-1 sm:text-2xl">
-                            {tag?.node?.name}
-                        </h2>
-                        <div class="mt-1 text-sm leading-normal">
-                            {tag?.node?.count} {tag?.node?.count === 1 ? 'post' : 'posts'}
-                        </div>
+        tags.map((tag) => (
+            <a class="mb-10 flex justify-between items-start gap-8 group sm:mb-12" href={tag?.node?.uri}>
+                <div class="grow">
+                    <h2 class="text-xl leading-tight font-serif font-medium group-hover:underline group-hover:decoration-dashed group-hover:underline-offset-4 group-hover:decoration-1 sm:text-2xl">
+                        {tag?.node?.name}
+                    </h2>
+                    <div class="mt-1 text-sm leading-normal">
+                        {tag?.node?.count} {tag?.node?.count === 1 ? 'post' : 'posts'}
                     </div>
-                    <div class="hidden font-serif italic opacity-0 transition group-hover:opacity-100 sm:inline-flex sm:gap-1 sm:items-center sm:shrink-0">
-                        View Tag Archive <ArrowRight class="fill-current w-4 h-4" />
-                    </div>
-                </a>
-            ))
+                </div>
+                <div class="hidden font-serif italic opacity-0 transition group-hover:opacity-100 sm:inline-flex sm:gap-1 sm:items-center sm:shrink-0">
+                    View Tag Archive <ArrowRight class="fill-current w-4 h-4" />
+                </div>
+            </a>
+        ))
     }
-    <!-- <Subscribe class="my-16 sm:my-24" /> -->
+
+    <nav aria-label="Pagination" class="mt-12 flex justify-between items-center px-12 py-2">
+        {pageInfo?.hasPreviousPage && (
+            <a
+                href={getPaginationUrl('previous')}
+                class="inline-flex items-center px-4 py-2 border border-current rounded hover:bg-gray-100"
+            >
+                <ArrowLeft class="fill-current w-4 h-4 mr-2" /> Previous
+            </a>
+        )}
+        {!pageInfo?.hasPreviousPage && <div></div>}
+        {pageInfo?.hasNextPage && (
+            <a
+                href={getPaginationUrl('next')}
+                class="inline-flex items-center px-4 py-2 border border-current rounded hover:bg-gray-100"
+            >
+                Next <ArrowRight class="fill-current w-4 h-4 ml-2" />
+            </a>
+        )}
+    </nav>
+
+    <!-- Debugging information -->
+    <pre class="mt-8 p-4 bg-gray-100 rounded-md text-xs">
+        {JSON.stringify({
+            tagsCount: tags.length,
+            pageInfo: {
+                hasNextPage: pageInfo?.hasNextPage,
+                hasPreviousPage: pageInfo?.hasPreviousPage,
+                startCursor: pageInfo?.startCursor,
+                endCursor: pageInfo?.endCursor
+            },
+            queryParams: {
+                after,
+                before
+            }
+        }, null, 2)}
+    </pre>
 </BaseLayout>

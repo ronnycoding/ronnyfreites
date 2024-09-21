@@ -150,13 +150,7 @@ query GetNodeByURI($uri: String!, $idUri: ID!, $categoryName: String, $first: In
         ... on Tag {
             id
             name
-            posts(
-                where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }], categoryName: $categoryName }
-                first: $first
-                last: $last
-                after: $after
-                before: $before
-            ) {
+            posts(where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }] }, first: $first, last: $last, after: $after, before: $before) {
                 edges {
                     cursor
                     node {

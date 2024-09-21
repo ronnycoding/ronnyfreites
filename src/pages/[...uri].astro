@@ -28,10 +28,12 @@ const [pageData, postData, categoryData, tagData] = dataTypes.map(type =>
 
 const title = postData?.title ?? pageData?.title ?? categoryData?.name ?? tagData?.name ?? '';
 
-const posts = nodeByUri?.posts?.edges ??
-              categoryData?.posts?.edges ??
-              tagData?.posts?.edges ??
-              [];
+const posts = [
+  nodeByUri?.posts?.edges,
+  categoryData?.posts?.edges,
+  tagData?.posts?.edges,
+  nodeByUri?.tag?.posts?.edges
+].find(arr => Array.isArray(arr) && arr.length > 0) || [];
 
 const blocks = (pageData?.editorBlocks ?? postData?.editorBlocks ?? []).filter(isWPBlock);
 
@@ -43,10 +45,17 @@ if (!title && posts.length === 0 && blocks.length === 0) {
 const seo = nodeByUri?.nodeByUri?.seo;
 
 // Pagination logic
-const pageInfo = nodeByUri?.posts?.pageInfo ??
-                 categoryData?.posts?.pageInfo ??
-                 tagData?.posts?.pageInfo ??
-                 {};
+const isNonEmptyObject = (obj: any): boolean => {
+  return obj != null && typeof obj === 'object' && Object.keys(obj).length > 0;
+};
+
+// Improved pageInfo selection logic
+const pageInfo = [
+  nodeByUri?.posts?.pageInfo,
+  categoryData?.posts?.pageInfo,
+  tagData?.posts?.pageInfo,
+  nodeByUri?.tag?.posts?.pageInfo
+].find(isNonEmptyObject) || {};
 
 const { hasNextPage, hasPreviousPage, startCursor, endCursor } = pageInfo ?? {};
 

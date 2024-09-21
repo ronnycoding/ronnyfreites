@@ -1,4 +1,4 @@
-query GetTags($cursor: String) {
+query GetTags($first: Int, $last: Int, $after: String, $before: String) {
     nodeByUri(uri: "tag") {
         __typename
         ... on Page {
@@ -32,9 +32,16 @@ query GetTags($cursor: String) {
             }
         }
     }
-    tags(where: { orderby: COUNT, hideEmpty: true }, first: 10, after: $cursor) {
+    tags(where: { orderby: COUNT, hideEmpty: true }, first: $first, last: $last, after: $after, before: $before) {
         __typename
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+        }
         edges {
+            cursor
             node {
                 ... on Tag {
                     __typename

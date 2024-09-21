@@ -31,8 +31,18 @@ export const getNodeByUri = async ({
     return sdk.GetNodeByURI({ uri, idUri: uri, categoryName, first, after, last, before });
 };
 
-export const getAllTags = async (cursor?: string) => {
-    return sdk.GetTags({ cursor });
+export const getAllTags = async ({
+    first,
+    last,
+    after,
+    before
+}: {
+    first?: number | null;
+    last?: number | null;
+    after?: string | null;
+    before?: string | null;
+}) => {
+    return sdk.GetTags({ first, last, after, before });
 };
 
 export const getRssPosts = async () => {

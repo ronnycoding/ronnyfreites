@@ -57,6 +57,8 @@ const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
         </noscript>
         <Seo seo={seo} baseUrl="https://ronnyfreites.com" />
 
+        <script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+
         <!-- Google Analytics -->
         <script type="text/partytown" define:vars={{ GA_ID }}>
           window.dataLayer = window.dataLayer || [];
@@ -67,7 +69,6 @@ const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
           });
           window.gtag = gtag;
         </script>
-        <script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
 
         <!-- Google Tag Manager -->
         <!-- <script type="text/partytown" define:vars={{ GA_ID }}>

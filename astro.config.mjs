@@ -15,7 +15,7 @@ export default defineConfig({
         tailwind({
             applyBaseStyles: false
         }),
-        partytown({ config: { forward: ['dataLayer.push'] } })
+        partytown({ config: { forward: [['dataLayer.push', { preserveBehavior: true }]] } })
     ],
 
     output: 'server',

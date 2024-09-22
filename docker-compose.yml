@@ -1,6 +1,5 @@
 services:
     wordpress:
-        container_name: wordpress
         image: wordpress
         restart: always
         ports:
@@ -22,7 +21,6 @@ services:
             - wordpress:/var/www/html
 
     wpcli:
-        container_name: wpcli
         depends_on:
             - wordpress
         image: wordpress:cli

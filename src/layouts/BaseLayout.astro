@@ -67,16 +67,15 @@ const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
           gtag('config', GA_ID, {
             send_page_view: false
           });
-          window.gtag = gtag;
         </script>
 
         <!-- Google Tag Manager -->
-        <script type="text/partytown" define:vars={{ GA_ID }}>
+        <script is:inline type="text/partytown">
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer', GA_ID);
+          })(window,document,'script','dataLayer', 'GTM-T8BMV2DW');
         </script>
 
         <ViewTransitions />
@@ -99,7 +98,8 @@ const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
         </div>
         <script type="text/partytown" define:vars={{ GA_ID }}>
         (function() {
-          const gtag = window.gtag
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
 
           function trackPageView() {
             const consentGiven = localStorage.getItem('cookieConsent') === 'true';
@@ -128,6 +128,8 @@ const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
 
           // Track page views on navigation
           document.addEventListener('astro:after-swap', trackPageView);
+          // Track consent changes
+          document.addEventListener('cookieConsent', trackPageView);
         })();
         </script>
     </body>

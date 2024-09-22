@@ -33,6 +33,7 @@
 
   function setConsent(consent) {
     localStorage.setItem('cookieConsent', consent);
+    document.dispatchEvent(new Event('cookieConsent'));
     hideBanner();
   }
 

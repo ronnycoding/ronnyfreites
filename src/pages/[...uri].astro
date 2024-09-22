@@ -23,10 +23,18 @@ const nodeByUri = await getNodeByUri({
 });
 
 const nodeData = nodeByUri?.nodeByUri;
-const dataTypes = ['Page', 'Post', 'Category', 'Tag'];
-const [pageData, postData, categoryData, tagData] = dataTypes.map(type =>
-  nodeData && isGraphType(nodeData, type as WPBlockTypeKeys) ? nodeData : null
-);
+
+// Explicit type checking
+const isPage = isGraphType(nodeData, 'Page');
+const isPost = isGraphType(nodeData, 'Post');
+const isCategory = isGraphType(nodeData, 'Category');
+const isTag = isGraphType(nodeData, 'Tag');
+
+// Data extraction based on type
+const pageData = isPage ? nodeData : null;
+const postData = isPost ? nodeData : null;
+const categoryData = isCategory ? nodeData : null;
+const tagData = isTag ? nodeData : null;
 
 const title = postData?.title ?? pageData?.title ?? categoryData?.name ?? tagData?.name ?? '';
 
@@ -45,23 +53,24 @@ if (!title && posts.length === 0 && blocks.length === 0) {
 
 const seo = nodeByUri?.nodeByUri?.seo;
 
-// Pagination logic
-const isNonEmptyObject = (obj: any): boolean => {
-  return obj != null && typeof obj === 'object' && Object.keys(obj).length > 0;
-};
-
 // Improved pageInfo selection logic
-const pageInfo = [
-  nodeByUri?.posts?.pageInfo,
-  categoryData?.posts?.pageInfo,
-  tagData?.posts?.pageInfo
-].find(isNonEmptyObject) || {};
+const pageInfo = categoryData?.posts?.pageInfo ?? tagData?.posts?.pageInfo ?? nodeByUri?.posts?.pageInfo ?? {};
+const { hasNextPage, hasPreviousPage, startCursor, endCursor } = pageInfo || {};
 
-const { hasNextPage, hasPreviousPage, startCursor, endCursor } = pageInfo ?? {};
+// Cache control logic
+let cacheControl: string;
 
-Astro.response.headers.set('Cache-Control', 's-maxage=2592000, stale-while-revalidate');
-Astro.response.headers.set('Vercel-CDN-Cache-Control', 'max-age=2592000');
-Astro.response.headers.set('CDN-Cache-Control', 'max-age=2592000');
+if (isPage || isPost) {
+  cacheControl = 's-maxage=2592000, stale-while-revalidate'; // 30 days
+} else if (isCategory || isTag) {
+  cacheControl = 's-maxage=86400, stale-while-revalidate'; // 1 day
+} else {
+  cacheControl = 's-maxage=3600, stale-while-revalidate'; // 1 hour
+}
+
+Astro.response.headers.set('Cache-Control', cacheControl);
+Astro.response.headers.set('Vercel-CDN-Cache-Control', cacheControl.replace('s-maxage', 'max-age'));
+Astro.response.headers.set('CDN-Cache-Control', cacheControl.replace('s-maxage', 'max-age'));
 ---
 
 <BaseLayout

@@ -6,6 +6,7 @@ import Nav from '@/components/Nav.astro';
 import Seo from '@/components/Seo.astro';
 import type { Menu } from '@/utils/types'
 import type { PostTypeSeo, TaxonomySeo } from '@/gql/sdk';
+import ConsentBanner from '@/components/ConsentBanner.astro';
 
 import '@/styles/global.css';
 
@@ -14,8 +15,7 @@ export type Props = {
   primaryMenu?: Menu | null,
   footerMenu?: Menu | null,
   title: string,
-  description:
-  string,
+  description: string,
   seo: PostTypeSeo | TaxonomySeo
 };
 
@@ -28,12 +28,15 @@ const {
   seo,
   ...head
 } = Astro.props;
+
+const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
 ---
 
 <!doctype html>
 <html lang="es" class="antialiased break-words">
     <head>
         <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="generator" content={Astro.generator} />
 
@@ -51,57 +54,79 @@ const {
         <noscript>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" />
         </noscript>
-
         <Seo seo={seo} baseUrl="https://ronnyfreites.com" />
 
-        <!-- Theme script -->
-        <script>
-            (function() {
-                if (localStorage.theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                }
-            })();
-        </script>
-
-        <!-- Google Tag Manager -->
-        <script
-          async
-          type="text/partytown"
-          src="https://www.googletagmanager.com/gtag/js?id=GTM-T8BMV2DW"
-        ></script>
-        <script is:inline>
+        <!-- Google Analytics -->
+        <script type="text/partytown" define:vars={{ GA_ID }}>
           window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-          gtag("js", new Date());
-
-          gtag("config", "GTM-T8BMV2DW");
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', GA_ID, {
+            send_page_view: false
+          });
+          window.gtag = gtag;
         </script>
+        <script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
 
         <!-- Google Tag Manager -->
-        <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer', "GTM-T8BMV2DW");</script>
-        <!-- End Google Tag Manager -->
+        <script type="text/partytown" define:vars={{ GA_ID }}>
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer', GA_ID);
+        </script>
 
         <ViewTransitions />
     </head>
     <body class="bg-main text-main">
         <!-- Google Tag Manager (noscript) -->
-        <noscript client:load>
-          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8BMV2DW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        <noscript>
+          <iframe src={`https://www.googletagmanager.com/ns.html?id=${GA_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->
+
         <div class="flex flex-col min-h-screen px-4 md:px-8">
             <Nav menu={primaryMenu} />
             {showHeader && <Header title={title} description={description} />}
             <main class="grow w-full max-w-3xl mx-auto">
                 <slot />
             </main>
+            <ConsentBanner />
             <Footer menu={footerMenu} />
         </div>
+        <script type="text/partytown" define:vars={{ GA_ID }}>
+        (function() {
+          const gtag = window.gtag
+
+          function trackPageView() {
+            const consentGiven = localStorage.getItem('cookieConsent') === 'true';
+            if (consentGiven && typeof gtag === 'function') {
+              console.log('Manually tracking page view', {
+                title: document.title,
+                url: window.location.href,
+                path: window.location.pathname
+              });
+              gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname,
+                send_to: GA_ID
+              });
+            } else {
+              console.log('Page view not tracked', {
+                consentGiven,
+                gtagAvailable: typeof window.gtag === 'function'
+              });
+            }
+          }
+
+          // Track initial page view
+          trackPageView();
+
+          // Track page views on navigation
+          document.addEventListener('astro:after-swap', trackPageView);
+        })();
+        </script>
     </body>
 </html>

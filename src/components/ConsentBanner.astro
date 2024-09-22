@@ -1,0 +1,47 @@
+---
+// ConsentBanner.astro
+---
+
+<div id="consent-banner" class="fixed bottom-0 left-0 right-0 w-full bg-main shadow-md transition-transform duration-300 transform translate-y-full border-t-2 border-solid" transition:persist>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between">
+    <p class="text-sm mb-4 sm:mb-0 prose prose-dante">
+      Utilizamos cookies para mejorar tu experiencia. ¿Aceptas el uso de cookies?
+    </p>
+    <div class="flex space-x-4">
+      <button id="accept-cookies" class="inline-flex items-center justify-center px-6 py-2 text-sm leading-tight italic text-main bg-transparent hover:bg-main hover:text-white border border-main rounded-full transition duration-300">
+        Aceptar
+      </button>
+      <button id="reject-cookies" class="inline-flex items-center justify-center px-6 py-2 text-sm leading-tight italic text-main bg-transparent hover:bg-main hover:text-white border border-main rounded-full transition duration-300">
+        Rechazar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const banner = document.getElementById('consent-banner');
+  const acceptButton = document.getElementById('accept-cookies');
+  const rejectButton = document.getElementById('reject-cookies');
+
+  function showBanner() {
+    banner.classList.remove('translate-y-full');
+  }
+
+  function hideBanner() {
+    banner.classList.add('translate-y-full');
+  }
+
+  function setConsent(consent) {
+    localStorage.setItem('cookieConsent', consent);
+    hideBanner();
+  }
+
+  // Check for existing consent
+  const existingConsent = localStorage.getItem('cookieConsent');
+  if (existingConsent === null) {
+    showBanner();
+  }
+
+  acceptButton.addEventListener('click', () => setConsent('true'));
+  rejectButton.addEventListener('click', () => setConsent('false'));
+</script>

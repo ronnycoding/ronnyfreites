@@ -12,13 +12,9 @@ services:
         depends_on:
             - db
         volumes:
-            - ./wp/plugins:/var/www/html/wp-content/plugins
-            - ./wp/mu-plugins:/var/www/html/wp-content/mu-plugins
-            - ./wp/themes:/var/www/html/wp-content/themes
-            - ./wp/upgrade:/var/www/html/wp-content/upgrade
-            - ./wp/uploads:/var/www/html/wp-content/uploads
             - ./wp/wp-config.php:/var/www/html/wp-config.php
-            - wordpress:/var/www/html
+            - ./wp/wp-content:/var/www/html/wp-content
+            - ./wp/db-backups:/var/www/html/db-backups
 
     wpcli:
         depends_on:
@@ -27,11 +23,8 @@ services:
         user: 1000:1000
         command: tail -f /dev/null
         volumes:
-            - ./wp/plugins:/var/www/html/wp-content/plugins
-            - ./wp/mu-plugins:/var/www/html/wp-content/mu-plugins
-            - ./wp/themes:/var/www/html/wp-content/themes
-            - ./wp/upgrade:/var/www/html/wp-content/upgrade
-            - wordpress:/var/www/html
+            - ./wp/wp-config.php:/var/www/html/wp-config.php
+            - ./wp/wp-content:/var/www/html/wp-content
             - ./wp/db-backups:/var/www/html/db-backups
         environment:
             WORDPRESS_DB_HOST: db
@@ -54,4 +47,3 @@ services:
 
 volumes:
     db:
-    wordpress:

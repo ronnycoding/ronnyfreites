@@ -27,7 +27,9 @@ function getImageUrl(image: { sourceUrl?: string } | undefined): string | undefi
     <link rel="canonical" href={replaceUrls(seo.canonical || '')} />
     <meta name="description" content={seo.metaDesc} />
     <meta name="keywords" content={seo.metaKeywords} />
-    <meta name="robots" content={`${seo.metaRobotsNoindex},${seo.metaRobotsNofollow}`} />
+    <!-- override headless WordPress settings noindex nofollow -->
+    <!-- <meta name="robots" content={`${seo.metaRobotsNoindex},${seo.metaRobotsNofollow}`} /> -->
+    <meta name="robots" content="index,follow" />
 
     <!-- OpenGraph tags -->
     <meta property="og:title" content={seo.opengraphTitle} />
@@ -66,5 +68,5 @@ function getImageUrl(image: { sourceUrl?: string } | undefined): string | undefi
 
     {/* Include fullHead if it exists and is not empty */}
     {seo.fullHead && <Fragment set:html={seo.fullHead} />}
-  </>
+  </m>
 )}

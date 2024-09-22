@@ -12,9 +12,10 @@ const seo = allTags?.nodeByUri?.seo;
 const blocks = allTags?.nodeByUri?.editorBlocks?.filter(isWPBlock) ?? [];
 const tags = allTags?.tags?.edges ?? [];
 
-Astro.response.headers.set('Cache-Control', 's-maxage=3600, stale-while-revalidate');
-Astro.response.headers.set('Vercel-CDN-Cache-Control', 'max-age=3600',);
-Astro.response.headers.set('CDN-Cache-Control', 'max-age=60',);
+const cacheControl = 's-maxage=86400, stale-while-revalidate'; // 1 day
+Astro.response.headers.set('Cache-Control', cacheControl);
+Astro.response.headers.set('Vercel-CDN-Cache-Control', cacheControl.replace('s-maxage', 'max-age'));
+Astro.response.headers.set('CDN-Cache-Control', cacheControl.replace('s-maxage', 'max-age'));
 ---
 
 <BaseLayout

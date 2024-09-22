@@ -28,8 +28,6 @@ const {
   seo,
   ...head
 } = Astro.props;
-
-const PUBLIC_GTM_ID = import.meta.env.PUBLIC_GTM_ID;
 ---
 
 <!doctype html>
@@ -68,7 +66,7 @@ const PUBLIC_GTM_ID = import.meta.env.PUBLIC_GTM_ID;
         <!-- Google Tag Manager -->
         <script
           async
-          src={`https://www.googletagmanager.com/gtag/js?id=${PUBLIC_GTM_ID}`}
+          src="https://www.googletagmanager.com/gtag/js?id=GTM-T8BMV2DW"
         ></script>
         <script is:inline>
           window.dataLayer = window.dataLayer || [];
@@ -77,7 +75,7 @@ const PUBLIC_GTM_ID = import.meta.env.PUBLIC_GTM_ID;
           }
           gtag("js", new Date());
 
-          gtag("config", PUBLIC_GTM_ID);
+          gtag("config", "GTM-T8BMV2DW");
         </script>
 
         <!-- Google Tag Manager -->
@@ -85,7 +83,7 @@ const PUBLIC_GTM_ID = import.meta.env.PUBLIC_GTM_ID;
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer', PUBLIC_GTM_ID);</script>
+        })(window,document,'script','dataLayer', "GTM-T8BMV2DW");</script>
         <!-- End Google Tag Manager -->
 
         <ViewTransitions />
@@ -93,7 +91,7 @@ const PUBLIC_GTM_ID = import.meta.env.PUBLIC_GTM_ID;
     <body class="bg-main text-main">
         <!-- Google Tag Manager (noscript) -->
         <noscript>
-          <iframe src={`https://www.googletagmanager.com/ns.html?id=${PUBLIC_GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8BMV2DW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->
         <div class="flex flex-col min-h-screen px-4 md:px-8">

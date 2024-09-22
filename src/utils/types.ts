@@ -57,7 +57,7 @@ export type {
     RootQueryToTagConnectionEdge
 };
 
-type WPBlockTypeKeys = NonNullable<WPBlock['__typename']>;
+export type WPBlockTypeKeys = NonNullable<WPBlock['__typename']>;
 
 type WPBlockTypeMap = {
     [K in WPBlockTypeKeys]: Extract<WPBlock, { __typename?: K }>;

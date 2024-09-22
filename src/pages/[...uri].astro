@@ -5,6 +5,8 @@ import { isGraphType, isWPBlock } from '@/utils/types'
 import WPBlock from '@/components/WPBlock.astro';
 import Pagination from '@/components/Pagination.astro';
 import PostPreview from '@/components/PostPreview.astro';
+import type { WPBlockTypeKeys } from '@/utils/types';
+import { Image } from "astro:assets"
 
 const POSTS_PER_PAGE = 5;
 
@@ -23,7 +25,7 @@ const nodeByUri = await getNodeByUri({
 const nodeData = nodeByUri?.nodeByUri;
 const dataTypes = ['Page', 'Post', 'Category', 'Tag'];
 const [pageData, postData, categoryData, tagData] = dataTypes.map(type =>
-  nodeData && isGraphType(nodeData, type) ? nodeData : null
+  nodeData && isGraphType(nodeData, type as WPBlockTypeKeys) ? nodeData : null
 );
 
 const title = postData?.title ?? pageData?.title ?? categoryData?.name ?? tagData?.name ?? '';
@@ -72,6 +74,13 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
   footerMenu={nodeByUri?.footerMenu?.nodes?.[0] && isGraphType(nodeByUri?.footerMenu?.nodes?.[0], 'Menu') ? nodeByUri?.footerMenu?.nodes?.[0] : null}
   seo={seo}
 >
+    {postData?.title && (
+      <div class="flex mb-7 justify-center">
+      <a href="https://siteground.es/hosting-web.htm?afimagecode=cddc106dcf0ba538718b7099dc84c38b" target="_blank">
+        <Image border="0" inferSize={true} loading="lazy" decoding="async" alt="Anuncio - Hosting Web de SiteGround - Diseñado para una fácil administración web. Haz clic para saber más." src="https://siteground.com/static/affiliate/es_ES/NOPRICE/general_ES_general-hosting-leaderboard-light.jpg">
+      </a>
+      </div>
+    )}
     {title && (
         <header class="mb-4">
             <h1 class="text-3xl leading-tight font-serif font-medium sm:text-5xl sm:leading-tight">{title}</h1>
@@ -108,5 +117,12 @@ Astro.response.headers.set("Cache-Control", "max-age=600, must-revalidate");
     )}
     {posts?.length === 0 && (before || after) && (
       <p>No posts found on this page. <a href={`${Astro.url.pathname}`}>Return to first page</a></p>
+    )}
+    {postData?.title && (
+      <div class="flex mb-7 justify-center">
+        <a href="https://siteground.es/hosting-web.htm?afimagecode=cddc106dcf0ba538718b7099dc84c38b" target="_blank">
+          <Image border="0" inferSize={true} loading="lazy" decoding="async" alt="Anuncio - Hosting Web de SiteGround - Diseñado para una fácil administración web. Haz clic para saber más." src="https://siteground.com/static/affiliate/es_ES/NOPRICE/general_ES_general-hosting-leaderboard-light.jpg">
+        </a>
+      </div>
     )}
 </BaseLayout>

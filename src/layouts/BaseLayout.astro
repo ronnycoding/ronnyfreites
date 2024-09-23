@@ -57,25 +57,13 @@ const {
         <!-- WP Seo -->
         <Seo seo={seo} baseUrl="https://ronnyfreites.com" />
 
-        <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=GTM-T8BMV2DW"></script>
-
-        <!-- Google Analytics -->
-        <script is:inline type="text/partytown">
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'GTM-T8BMV2DW', {
-            send_page_view: false
-          });
-        </script>
-
         <!-- Google Tag Manager -->
-        <script is:inline type="text/partytown">
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer', 'GTM-T8BMV2DW');
+        <script is:inline>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer', 'GTM-T8BMV2DW');
         </script>
 
         <ViewTransitions />
@@ -83,7 +71,7 @@ const {
     <body class="bg-main text-main">
         <!-- Google Tag Manager (noscript) -->
         <noscript>
-          <iframe src={`https://www.googletagmanager.com/ns.html?id=GTM-T8BMV2DW`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8BMV2DW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->
 
@@ -96,40 +84,34 @@ const {
             <ConsentBanner />
             <Footer menu={footerMenu} />
         </div>
-        <script is:inline type="text/partytown">
+        <script is:inline>
         (function() {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-
-          function trackPageView() {
-            const consentGiven = localStorage.getItem('cookieConsent') === 'true';
-            if (consentGiven && typeof gtag === 'function') {
-              console.log('Manually tracking page view', {
-                title: document.title,
-                url: window.location.href,
-                path: window.location.pathname
-              });
-              gtag('event', 'page_view', {
-                page_title: document.title,
-                page_location: window.location.href,
-                page_path: window.location.pathname,
-                send_to: 'GTM-T8BMV2DW'
-              });
-            } else {
-              console.log('Page view not tracked', {
-                consentGiven,
-                gtagAvailable: typeof window.gtag === 'function'
+          // Listen for consent changes
+          document.addEventListener('cookieConsent', function(event) {
+            if (event.detail.consent === true) {
+              // If consent is given, push the consent state to the data layer
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({'event': 'cookie_consent_given'});
+              window.dataLayer.push({
+                'event': 'virtualPageview',
+                'pageTitle': document.title,
+                'pageLocation': window.location.href,
+                'pagePath': window.location.pathname
               });
             }
-          }
+          });
 
-          // Track initial page view
-          trackPageView();
-
-          // Track page views on navigation
-          document.addEventListener('astro:after-swap', trackPageView);
-          // Track consent changes
-          document.addEventListener('cookieConsent', trackPageView);
+          // Listen for page navigation events
+          document.addEventListener('astro:after-swap', function() {
+            // Push a custom event to the data layer for page views
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              'event': 'virtualPageview',
+              'pageTitle': document.title,
+              'pageLocation': window.location.href,
+              'pagePath': window.location.pathname
+            });
+          });
         })();
         </script>
     </body>

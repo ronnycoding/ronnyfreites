@@ -88,10 +88,29 @@ const {
         (function() {
           // Listen for consent changes
           document.addEventListener('cookieConsent', function(event) {
-            if (event.detail.consent === true) {
+            if (event.detail.consent === 'given') {
               // If consent is given, push the consent state to the data layer
               window.dataLayer = window.dataLayer || [];
-              window.dataLayer.push({'event': 'cookie_consent_given'});
+              window.dataLayer.push({'event': 'cookieConsentGiven'});
+              window.dataLayer.push({
+                'event': 'virtualPageview',
+                'pageTitle': document.title,
+                'pageLocation': window.location.href,
+                'pagePath': window.location.pathname
+              });
+            } else if (event.detail.consent === 'denied') {
+              // If consent is not given, push the consent state to the data layer
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({'event': 'cookieConsentDenied'});
+            }
+          });
+
+          // Listen for page navigation events
+          document.addEventListener('astro:after-swap', function() {
+            const consentState = localStorage.getItem('cookieConsent');
+            if (consentState === 'given') {
+              // Push a custom event to the data layer for page views
+              window.dataLayer = window.dataLayer || [];
               window.dataLayer.push({
                 'event': 'virtualPageview',
                 'pageTitle': document.title,
@@ -99,18 +118,6 @@ const {
                 'pagePath': window.location.pathname
               });
             }
-          });
-
-          // Listen for page navigation events
-          document.addEventListener('astro:after-swap', function() {
-            // Push a custom event to the data layer for page views
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-              'event': 'virtualPageview',
-              'pageTitle': document.title,
-              'pageLocation': window.location.href,
-              'pagePath': window.location.pathname
-            });
           });
         })();
         </script>

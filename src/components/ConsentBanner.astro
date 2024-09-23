@@ -33,7 +33,10 @@
 
   function setConsent(consent) {
     localStorage.setItem('cookieConsent', consent);
-    document.dispatchEvent(new Event('cookieConsent'));
+    document.dispatchEvent(new CustomEvent('cookieConsent', {
+      bubbles: true,
+      detail: { consent }
+    }));
     hideBanner();
   }
 
@@ -43,6 +46,6 @@
     showBanner();
   }
 
-  acceptButton.addEventListener('click', () => setConsent('true'));
-  rejectButton.addEventListener('click', () => setConsent('false'));
+  acceptButton.addEventListener('click', () => setConsent('given'));
+  rejectButton.addEventListener('click', () => setConsent('denied'));
 </script>

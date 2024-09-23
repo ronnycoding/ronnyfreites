@@ -28,8 +28,6 @@ const {
   seo,
   ...head
 } = Astro.props;
-
-const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
 ---
 
 <!doctype html>
@@ -45,26 +43,28 @@ const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
         <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-        <!-- Preload fonts -->
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" />
+        <!-- Preload and apply fonts -->
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
 
-        <!-- Load fonts asynchronously -->
+        <!-- Load fonts asynchronously (fallback for browsers that don't support preload) -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" media="print" onload="this.media='all'" />
 
         <!-- Fallback in case JavaScript is disabled -->
         <noscript>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" />
         </noscript>
+
+        <!-- WP Seo -->
         <Seo seo={seo} baseUrl="https://ronnyfreites.com" />
 
-        <script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+        <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=GTM-T8BMV2DW"></script>
 
         <!-- Google Analytics -->
-        <script type="text/partytown" define:vars={{ GA_ID }}>
+        <script is:inline type="text/partytown">
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', GA_ID, {
+          gtag('config', 'GTM-T8BMV2DW', {
             send_page_view: false
           });
         </script>
@@ -83,7 +83,7 @@ const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
     <body class="bg-main text-main">
         <!-- Google Tag Manager (noscript) -->
         <noscript>
-          <iframe src={`https://www.googletagmanager.com/ns.html?id=${GA_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+          <iframe src={`https://www.googletagmanager.com/ns.html?id=GTM-T8BMV2DW`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->
 
@@ -96,7 +96,7 @@ const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
             <ConsentBanner />
             <Footer menu={footerMenu} />
         </div>
-        <script type="text/partytown" define:vars={{ GA_ID }}>
+        <script is:inline type="text/partytown">
         (function() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -113,7 +113,7 @@ const GA_ID = import.meta.env.PUBLIC_GTM_ID || '';
                 page_title: document.title,
                 page_location: window.location.href,
                 page_path: window.location.pathname,
-                send_to: GA_ID
+                send_to: 'GTM-T8BMV2DW'
               });
             } else {
               console.log('Page view not tracked', {

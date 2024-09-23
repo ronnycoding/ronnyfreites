@@ -72,15 +72,20 @@ const {
         })(window,document,'script','dataLayer', 'GTM-T8BMV2DW');
         </script>
 
+        <!-- Google Analytics -->
+        <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-GKW2L9Z4LX"></script>
+        <script type="text/partytown">
+         	window.dataLayer = window.dataLayer || [];
+         	function gtag() {
+          		dataLayer.push(arguments);
+         	}
+         	gtag("js", new Date());
+         	gtag("config", "G-GKW2L9Z4LX");
+        </script>
+
         <ViewTransitions />
     </head>
     <body class="bg-main text-main">
-        <!-- Google Tag Manager (noscript) -->
-        <noscript>
-          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8BMV2DW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-        </noscript>
-        <!-- End Google Tag Manager (noscript) -->
-
         <div class="flex flex-col min-h-screen px-4 md:px-8">
             <Nav menu={primaryMenu} />
             {showHeader && <Header title={title} description={description} />}
@@ -90,42 +95,42 @@ const {
             <ConsentBanner />
             <Footer menu={footerMenu} />
         </div>
-        <script is:inline>
-        (function() {
-          // Listen for consent changes
-          document.addEventListener('cookieConsent', function(event) {
-            if (event.detail.consent === 'given') {
-              // If consent is given, push the consent state to the data layer
-              window.dataLayer = window.dataLayer || [];
-              window.dataLayer.push({'event': 'cookieConsentGiven'});
-              window.dataLayer.push({
-                'event': 'virtualPageview',
-                'pageTitle': document.title,
-                'pageLocation': window.location.href,
-                'pagePath': window.location.pathname
-              });
-            } else if (event.detail.consent === 'denied') {
-              // If consent is not given, push the consent state to the data layer
-              window.dataLayer = window.dataLayer || [];
-              window.dataLayer.push({'event': 'cookieConsentDenied'});
-            }
-          });
+        <script type="text/partytown">
+          (function() {
+            // Listen for consent changes
+            document.addEventListener('cookieConsent', function(event) {
+              if (event.detail.consent === 'given') {
+                // If consent is given, push the consent state to the data layer
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({'event': 'cookieConsentGiven'});
+                window.dataLayer.push({
+                  'event': 'virtualPageview',
+                  'pageTitle': document.title,
+                  'pageLocation': window.location.href,
+                  'pagePath': window.location.pathname
+                });
+              } else {
+                // If consent is not given, push the consent state to the data layer
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({'event': 'cookieConsentNotGiven'});
+              }
+            });
 
-          // Listen for page navigation events
-          document.addEventListener('astro:after-swap', function() {
-            const consentState = localStorage.getItem('cookieConsent');
-            if (consentState === 'given') {
-              // Push a custom event to the data layer for page views
-              window.dataLayer = window.dataLayer || [];
-              window.dataLayer.push({
-                'event': 'virtualPageview',
-                'pageTitle': document.title,
-                'pageLocation': window.location.href,
-                'pagePath': window.location.pathname
-              });
-            }
-          });
-        })();
+            // Listen for page navigation events
+            document.addEventListener('astro:after-swap', function() {
+              const consent = localStorage.getItem('cookieConsent');
+              if (consent === 'given') {
+                // Push a custom event to the data layer for page views
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                  'event': 'virtualPageview',
+                  'pageTitle': document.title,
+                  'pageLocation': window.location.href,
+                  'pagePath': window.location.pathname
+                });
+              }
+            });
+          })();
         </script>
     </body>
 </html>

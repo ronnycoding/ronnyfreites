@@ -11,7 +11,6 @@
         "codegen": "graphql-codegen --config codegen.ts"
     },
     "dependencies": {
-        "@astrojs/partytown": "^2.1.2",
         "@astrojs/rss": "^4.0.7",
         "@astrojs/sitemap": "^3.1.6",
         "@astrojs/tailwind": "^5.1.1",

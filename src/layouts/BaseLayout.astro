@@ -57,20 +57,24 @@ const {
         <!-- WP Seo -->
         <Seo seo={seo} baseUrl="https://ronnyfreites.com" />
 
-        <!-- Google Analytics -->
-        <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-GKW2L9Z4LX"></script>
-        <script type="text/partytown">
-         	window.dataLayer = window.dataLayer || [];
-         	function gtag() {
-          		dataLayer.push(arguments);
-         	}
-         	gtag("js", new Date());
-         	gtag("config", "G-GKW2L9Z4LX");
+        <!-- Google Tag Manager -->
+        <script is:inline>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer', 'GTM-T8BMV2DW');
         </script>
 
         <ViewTransitions />
     </head>
     <body class="bg-main text-main">
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8BMV2DW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
         <div class="flex flex-col min-h-screen px-4 md:px-8">
             <Nav menu={primaryMenu} />
             {showHeader && <Header title={title} description={description} />}
@@ -80,39 +84,35 @@ const {
             <ConsentBanner />
             <Footer menu={footerMenu} />
         </div>
-        <script type="text/partytown">
-          (function() {
-            // Listen for consent changes
-            document.addEventListener('cookieConsent', function(event) {
-              if (event.detail.consent === 'given') {
-                // If consent is given, push the consent state to the data layer
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({'event': 'cookieConsentGiven'});
-                window.dataLayer.push({
-                  'event': 'virtualPageview',
-                  'pageTitle': document.title,
-                  'pageLocation': window.location.href,
-                  'pagePath': window.location.pathname
-                });
-              } else {
-                // If consent is not given, push the consent state to the data layer
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({'event': 'cookieConsentNotGiven'});
-              }
-            });
-
-            // Listen for page navigation events
-            document.addEventListener('astro:after-swap', function() {
-              // Push a custom event to the data layer for page views
+        <script is:inline>
+        (function() {
+          // Listen for consent changes
+          document.addEventListener('cookieConsent', function(event) {
+            if (event.detail.consent === true) {
+              // If consent is given, push the consent state to the data layer
               window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({'event': 'cookie_consent_given'});
               window.dataLayer.push({
                 'event': 'virtualPageview',
                 'pageTitle': document.title,
                 'pageLocation': window.location.href,
                 'pagePath': window.location.pathname
               });
+            }
+          });
+
+          // Listen for page navigation events
+          document.addEventListener('astro:after-swap', function() {
+            // Push a custom event to the data layer for page views
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              'event': 'virtualPageview',
+              'pageTitle': document.title,
+              'pageLocation': window.location.href,
+              'pagePath': window.location.pathname
             });
-          })();
+          });
+        })();
         </script>
     </body>
 </html>

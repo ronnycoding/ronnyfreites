@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets"
 import { isGraphType } from "@/utils/types"
 import type { WPBlock } from "@/utils/types"
 import List from "@/components/List.astro"
@@ -54,7 +53,7 @@ const { blocks } = Astro.props as Props
     return (
     <div class="max-w-none prose prose-dante sm:prose-lg my-4">
       <figure key={block.clientId}>
-        <Image
+        <img
           src={transformedImage?.src}
           srcset={transformedImage?.srcset}
           loading="lazy"

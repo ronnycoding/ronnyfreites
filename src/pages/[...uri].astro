@@ -5,8 +5,6 @@ import { isGraphType, isWPBlock } from '@/utils/types'
 import WPBlock from '@/components/WPBlock.astro';
 import Pagination from '@/components/Pagination.astro';
 import PostPreview from '@/components/PostPreview.astro';
-import type { WPBlockTypeKeys } from '@/utils/types';
-import { Image } from "astro:assets"
 
 const POSTS_PER_PAGE = 5;
 
@@ -88,7 +86,7 @@ Astro.response.headers.set('CDN-Cache-Control', cacheControl.replace('s-maxage',
     {postData?.title && (
       <div class="flex mb-7 justify-center">
         <a href="https://siteground.es/hosting-web.htm?afimagecode=cddc106dcf0ba538718b7099dc84c38b" target="_blank" client:load>
-          <Image border="0" inferSize={true} loading="lazy" decoding="async" alt="Anuncio - Hosting Web de SiteGround - Diseñado para una fácil administración web. Haz clic para saber más." src="https://siteground.com/static/affiliate/es_ES/NOPRICE/general_ES_general-hosting-leaderboard-light.jpg" />
+          <img border="0" inferSize={true} loading="lazy" decoding="async" alt="Anuncio - Hosting Web de SiteGround - Diseñado para una fácil administración web. Haz clic para saber más." src="https://siteground.com/static/affiliate/es_ES/NOPRICE/general_ES_general-hosting-leaderboard-light.jpg" client:load />
         </a>
       </div>
     )}
@@ -132,7 +130,7 @@ Astro.response.headers.set('CDN-Cache-Control', cacheControl.replace('s-maxage',
     {postData?.title && (
       <div class="flex my-7 justify-center">
         <a href="https://siteground.es/hosting-web.htm?afimagecode=cddc106dcf0ba538718b7099dc84c38b" target="_blank" client:load>
-          <Image border="0" inferSize={true} loading="lazy" decoding="async" alt="Anuncio - Hosting Web de SiteGround - Diseñado para una fácil administración web. Haz clic para saber más." src="https://siteground.com/static/affiliate/es_ES/NOPRICE/general_ES_general-hosting-leaderboard-light.jpg" />
+          <img border="0" inferSize={true} loading="lazy" decoding="async" alt="Anuncio - Hosting Web de SiteGround - Diseñado para una fácil administración web. Haz clic para saber más." src="https://siteground.com/static/affiliate/es_ES/NOPRICE/general_ES_general-hosting-leaderboard-light.jpg" client:load />
         </a>
       </div>
     )}

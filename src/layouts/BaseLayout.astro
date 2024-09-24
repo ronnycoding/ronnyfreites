@@ -39,21 +39,6 @@ const {
         <meta name="generator" content={Astro.generator} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-        <!-- Preconnect to Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-        <!-- Preload and apply fonts -->
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-
-        <!-- Load fonts asynchronously (fallback for browsers that don't support preload) -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" media="print" onload="this.media='all'" />
-
-        <!-- Fallback in case JavaScript is disabled -->
-        <noscript>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" />
-        </noscript>
-
         <!-- WP Seo -->
         <Seo seo={seo} baseUrl="https://ronnyfreites.com" />
 
@@ -82,6 +67,42 @@ const {
          	gtag("js", new Date());
          	gtag("config", "G-GKW2L9Z4LX");
         </script>
+
+        <style>
+          /* Inter Variable Font */
+          @font-face {
+            font-family: 'Inter';
+            src: url('/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+          }
+
+          @font-face {
+            font-family: 'Inter';
+            src: url('/fonts/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
+            font-weight: 100 900;
+            font-style: italic;
+            font-display: swap;
+          }
+
+          /* Newsreader Variable Font */
+          @font-face {
+            font-family: 'Newsreader';
+            src: url('/fonts/Newsreader-VariableFont_opsz,wght.ttf') format('truetype-variations');
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+          }
+
+          @font-face {
+            font-family: 'Newsreader';
+            src: url('/fonts/Newsreader-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
+            font-weight: 100 900;
+            font-style: italic;
+            font-display: swap;
+          }
+        </style>
 
         <ViewTransitions />
     </head>

@@ -16,7 +16,7 @@ export default defineConfig({
             applyBaseStyles: false
         }),
         partytown({
-            forward: ['dataLayer.push'],
+            forward: ['dataLayer.push', 'gtag'],
             debug: process.env.VERCEL_ENV !== 'production'
         })
     ],

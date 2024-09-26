@@ -38,6 +38,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.6
         version: 3.4.12
+      vanilla-cookieconsent:
+        specifier: ^3.0.1
+        version: 3.0.1
     devDependencies:
       '@graphql-codegen/cli':
         specifier: ^5.0.2
@@ -3223,6 +3226,9 @@ packages:
   value-or-promise@1.0.12:
     resolution: {integrity: sha512-Z6Uz+TYwEqE7ZN50gwn+1LCVo9ZVrpxRPOhOLnncYkY1ZzOYtrX8Fwf/rFktZ8R5mJms6EZf5TqNOMeZmnPq9Q==}
     engines: {node: '>=12'}
+
+  vanilla-cookieconsent@3.0.1:
+    resolution: {integrity: sha512-gqc4x7O9t1I4xWr7x6/jtQWPr4PZK26SmeA0iyTv1WyoECfAGnu5JEOExmMEP+5Fz66AT9OiCBO3GII4wDQHLw==}
 
   vfile-location@5.0.3:
     resolution: {integrity: sha512-5yXvWDEgqeiYiBe1lbxYF7UMAIm/IcopxMHrMQDq3nvKcjPKIhZklUKL+AE7J7uApI4kwe2snsK+eI6UTj9EHg==}
@@ -7237,6 +7243,8 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   value-or-promise@1.0.12: {}
+
+  vanilla-cookieconsent@3.0.1: {}
 
   vfile-location@5.0.3:
     dependencies:

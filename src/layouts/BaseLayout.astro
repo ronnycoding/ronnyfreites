@@ -6,7 +6,7 @@ import Nav from '@/components/Nav.astro';
 import Seo from '@/components/Seo.astro';
 import type { Menu } from '@/utils/types'
 import type { PostTypeSeo, TaxonomySeo } from '@/gql/sdk';
-import ConsentBanner from '@/components/ConsentBanner.astro';
+import CookieConsent from '@/components/CookieConsent.astro';
 
 import '@/styles/global.css';
 
@@ -48,19 +48,40 @@ const {
             }
         </script>
 
+        <script type="module" src="/src/scripts/cookieconsent-config.js"></script>
+
         <!-- Google Analytics -->
         <script
-          type="text/partytown"
           async
+          is:inline
           src="https://www.googletagmanager.com/gtag/js?id=G-GKW2L9Z4LX"
         ></script>
-        <script type="text/partytown">
-         	window.dataLayer = window.dataLayer || [];
-         	function gtag() {
-          		dataLayer.push(arguments);
-         	}
-         	gtag("js", new Date());
-         	gtag("config", "G-GKW2L9Z4LX");
+        <script>
+          // We need a global definition to avoid type warnings
+          declare global {
+            interface Window {
+              dataLayer: Record<string, any>[];
+              gtag: (...args: any[]) => void;
+            }
+          }
+
+          // Initialize dataLayer
+          window.dataLayer = window.dataLayer || [];
+
+          // Define gtag function
+          window.gtag = function gtag(...args: any[]) {
+            window.dataLayer.push(arguments);
+          };
+
+          // Load GA4 with denied default consents
+          window.gtag("js", new Date());
+          window.gtag("consent", "default", {
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied",
+            analytics_storage: "denied",
+          });
+          window.gtag("config", "G-GKW2L9Z4LX");
         </script>
 
         <ViewTransitions />
@@ -72,45 +93,25 @@ const {
             <main class="grow w-full max-w-3xl mx-auto">
                 <slot />
             </main>
-            <ConsentBanner />
             <Footer menu={footerMenu} />
-        </div>
-        <script type="text/partytown">
-          (function() {
-            // Listen for consent changes
-            document.addEventListener('cookieConsent', function(event) {
-              if (event.detail.consent === 'given') {
-                // If consent is given, push the consent state to the data layer
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({'event': 'cookieConsentGiven'});
-                window.dataLayer.push({
-                  'event': 'virtualPageview',
-                  'pageTitle': document.title,
-                  'pageLocation': window.location.href,
-                  'pagePath': window.location.pathname
+            <div transition:persist="find-me-on-the-other-side" id="cc-container">
+              <CookieConsent />
+              <script is:inline>
+                // Restore the `show--consent` class if it was present before the page swap
+                document.addEventListener("astro:before-preparation", event => {
+                  const htmlClassName = window.document.documentElement.className;
+                  const consentClassPresent = htmlClassName.includes("show--consent")
+                    ? true
+                    : false;
+                  window._showConsentClass = consentClassPresent;
                 });
-              } else {
-                // If consent is not given, push the consent state to the data layer
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({'event': 'cookieConsentNotGiven'});
-              }
-            });
 
-            // Listen for page navigation events
-            document.addEventListener('astro:after-swap', function() {
-              const consent = localStorage.getItem('cookieConsent');
-              if (consent === 'given') {
-                // Push a custom event to the data layer for page views
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({
-                  'event': 'virtualPageview',
-                  'pageTitle': document.title,
-                  'pageLocation': window.location.href,
-                  'pagePath': window.location.pathname
+                document.addEventListener("astro:before-swap", event => {
+                  const showConsent = window._showConsentClass ? ` show--consent` : "";
+                  event.newDocument.documentElement.className += showConsent;
                 });
-              }
-            });
-          })();
-        </script>
+              </script>
+            </div>
+        </div>
     </body>
 </html>

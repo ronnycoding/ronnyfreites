@@ -17,6 +17,8 @@ const blocks =
     pageData.editorBlocks?.filter(isWPBlock)) ??
   [];
 
+const imagesPreload = blocks?.filter(block => isGraphType(block, 'CoreImage'))
+
 const cacheControl = 's-maxage=86400, stale-while-revalidate'; // 1 day
 Astro.response.headers.set('Cache-Control', cacheControl);
 Astro.response.headers.set('Vercel-CDN-Cache-Control', cacheControl.replace('s-maxage', 'max-age'));
@@ -33,6 +35,7 @@ Astro.response.headers.set('CDN-Cache-Control', cacheControl.replace('s-maxage',
   primaryMenu={nodeByUri?.primaryMenu?.nodes?.[0] && isGraphType(nodeByUri?.primaryMenu?.nodes?.[0], 'Menu') ? nodeByUri?.primaryMenu?.nodes?.[0] : null}
   footerMenu={nodeByUri?.footerMenu?.nodes?.[0] && isGraphType(nodeByUri?.footerMenu?.nodes?.[0], 'Menu') ? nodeByUri?.footerMenu?.nodes?.[0] : null}
   seo={pageData?.seo}
+  imagesPreload={imagesPreload}
 >
     {pageData?.title && (
         <h1 class="text-3xl leading-tight font-serif font-medium sm:text-5xl sm:leading-tight mb-6">{pageData.title}</h1>

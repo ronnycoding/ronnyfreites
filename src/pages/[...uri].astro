@@ -44,6 +44,8 @@ const posts = [
 
 const blocks = (pageData?.editorBlocks ?? postData?.editorBlocks ?? []).filter(isWPBlock);
 
+const imagesPreload = blocks?.filter(block => isGraphType(block, 'CoreImage'))
+
 // Validation: Check if there's no content and return 404 if true
 if (!title && posts.length === 0 && blocks.length === 0) {
   return Astro.redirect('/404', 404);
@@ -82,6 +84,7 @@ Astro.response.headers.set('CDN-Cache-Control', cacheControl.replace('s-maxage',
   primaryMenu={nodeByUri?.primaryMenu?.nodes?.[0] && isGraphType(nodeByUri?.primaryMenu?.nodes?.[0], 'Menu') ? nodeByUri?.primaryMenu?.nodes?.[0] : null}
   footerMenu={nodeByUri?.footerMenu?.nodes?.[0] && isGraphType(nodeByUri?.footerMenu?.nodes?.[0], 'Menu') ? nodeByUri?.footerMenu?.nodes?.[0] : null}
   seo={seo}
+  imagesPreload={imagesPreload}
 >
     {postData?.title && (
       <div class="flex mb-7 justify-center">
